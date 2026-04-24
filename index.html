@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Literature — Biogas from Domestic Waste (Nigeria)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; font-size: 13px; background: #f9f9f9; color: #222; padding: 20px; }
+h1 { font-size: 18px; margin-bottom: 6px; }
+.note { background: #d4edda; border-left: 4px solid #28a745; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13px; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+input, select { font-size: 13px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+input { flex: 1; min-width: 200px; }
+.stats { display: flex; gap: 10px; margin-bottom: 12px; }
+.stat { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px 14px; font-size: 12px; color: #666; }
+.stat strong { display: block; font-size: 20px; font-weight: bold; color: #222; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+th { background: #f0f0f0; text-align: left; padding: 9px 10px; font-size: 11px; color: #555; border-bottom: 1px solid #ddd; cursor: pointer; white-space: nowrap; }
+th:hover { background: #e5e5e5; }
+td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+tr:hover td { background: #fafafa; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: bold; white-space: nowrap; }
+.src-mdpi { background: #cce5ff; color: #004085; }
+.src-pmc { background: #d4edda; color: #155724; }
+.src-front { background: #e2d9f3; color: #4a235a; }
+.src-rg { background: #fff3cd; color: #856404; }
+.src-acad { background: #fde8d8; color: #7c2d12; }
+.src-lidsen { background: #d1ece1; color: #0a4a2f; }
+.theme-ad { background: #d1ece1; color: #0a4a2f; }
+.theme-up { background: #cce5ff; color: #004085; }
+.theme-de { background: #e2d9f3; color: #4a235a; }
+.theme-te { background: #fff3cd; color: #856404; }
+.theme-af { background: #fde8d8; color: #7c2d12; }
+.theme-fd { background: #d4edda; color: #155724; }
+a.dl { display: inline-block; padding: 4px 10px; background: #007bff; color: #fff; border-radius: 3px; text-decoration: none; font-size: 11px; font-weight: bold; }
+a.dl:hover { background: #0056b3; }
+.free { font-size: 10px; color: #28a745; font-weight: bold; display: block; margin-top: 3px; }
+.none { padding: 2rem; text-align: center; color: #888; }
+</style>
+</head>
+<body>
+
+<h1>📚 Free Literature — Cooking Gas from Domestic Waste</h1>
+<p style="margin-bottom:12px; color:#555;">For: Final Year Chemical Engineering Research, FUT Minna, Nigeria</p>
+
+<div class="note">
+  ✅ <strong>Every paper below is 100% FREE</strong> — no login, no payment. All from MDPI, PubMed Central (PMC), Frontiers, ResearchGate, Academia.edu, and LIDSEN open-access journals. Click "FREE PDF" to download.
+</div>
+
+<div class="controls">
+  <input type="text" id="q" placeholder="Search title, author..." oninput="render()">
+  <select id="th" onchange="render()">
+    <option value="">All themes</option>
+    <option value="ad">Anaerobic digestion</option>
+    <option value="up">Biogas upgrading</option>
+    <option value="de">Reactor / plant design</option>
+    <option value="te">Techno-economic analysis</option>
+    <option value="af">Africa / Nigeria</option>
+    <option value="fd">Food & domestic waste</option>
+  </select>
+  <select id="yr" onchange="render()">
+    <option value="">All years</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+  </select>
+  <select id="src" onchange="render()">
+    <option value="">All sources</option>
+    <option value="MDPI">MDPI</option>
+    <option value="PMC">PubMed Central</option>
+    <option value="Frontiers">Frontiers</option>
+    <option value="ResearchGate">ResearchGate</option>
+    <option value="Academia.edu">Academia.edu</option>
+    <option value="LIDSEN">LIDSEN</option>
+  </select>
+</div>
+
+<div class="stats">
+  <div class="stat"><strong id="cnt">0</strong>papers found</div>
+  <div class="stat"><strong>100%</strong>free to download</div>
+  <div class="stat"><strong>2018–2024</strong>publication years</div>
+</div>
+
+<table id="tbl">
+<thead>
+<tr>
+  <th>#</th>
+  <th onclick="srt('title')">Title ↕</th>
+  <th onclick="srt('author')">Author(s) ↕</th>
+  <th onclick="srt('year')">Year ↕</th>
+  <th>Source</th>
+  <th>Theme</th>
+  <th>Download</th>
+</tr>
+</thead>
+<tbody id="tb"></tbody>
+</table>
+<div id="none" class="none" style="display:none;">No papers match your filters. Try adjusting.</div>
+
+<script>
+const tmap = {
+  ad:{l:"Anaerobic digestion",c:"theme-ad"},
+  up:{l:"Biogas upgrading",c:"theme-up"},
+  de:{l:"Reactor design",c:"theme-de"},
+  te:{l:"Techno-economic",c:"theme-te"},
+  af:{l:"Africa/Nigeria",c:"theme-af"},
+  fd:{l:"Food/domestic waste",c:"theme-fd"}
+};
+const smap = {
+  MDPI:{c:"src-mdpi"},PMC:{c:"src-pmc"},Frontiers:{c:"src-front"},
+  ResearchGate:{c:"src-rg"},"Academia.edu":{c:"src-acad"},LIDSEN:{c:"src-lidsen"}
+};
+
+const refs = [
+  {title:"Technologies for biogas upgrading to biomethane: a review",author:"Adnan et al.",year:2019,src:"PMC",theme:"up",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC6956267/pdf/bioengineering-06-00092.pdf"},
+  {title:"Comparative assessment of single-stage and two-stage anaerobic digestion for biogas from high moisture MSW",author:"Markphan et al.",year:2020,src:"PMC",theme:"de",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC7443091/pdf/peerj-08-09693.pdf"},
+  {title:"Biomethane production from anaerobic co-digestion of OFMSW with sewage sludge: effect of ISR",author:"Corsino et al.",year:2021,src:"PMC",theme:"ad",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8702077/pdf/ijerph-18-13048.pdf"},
+  {title:"Techno-economic and environmental analysis of organic MSW for biogas — Bangladesh",author:"Alam et al.",year:2024,src:"PMC",theme:"te",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC11145329/pdf/"},
+  {title:"Techno-economic evaluation of biogas from food waste via anaerobic digestion (Oman)",author:"Al-Hinai et al.",year:2020,src:"PMC",theme:"te",pdf:"https://www.nature.com/articles/s41598-020-72897-5.pdf"},
+  {title:"MSW gasification for resilient energy systems post-COVID-19 (Saudi Arabia LCA)",author:"Alqahtani et al.",year:2024,src:"PMC",theme:"te",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC12634608/pdf/"},
+  {title:"A comprehensive study on AD of organic solid waste: configurations, parameters and techno-economics",author:"Dey et al.",year:2024,src:"PMC",theme:"de",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC11630644/pdf/"},
+  {title:"Pretreatment of lignocellulosic biomass for enhanced biogas yield: review",author:"Kasinath et al.",year:2021,src:"PMC",theme:"ad",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8650649/pdf/"},
+  {title:"Biogas potential from livestock and municipal waste for renewable energy in Nigeria",author:"Balogun et al.",year:2021,src:"PMC",theme:"af",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8456127/pdf/"},
+  {title:"Biogas production systems and upgrading technologies: open review",author:"Scarlat et al.",year:2022,src:"PMC",theme:"up",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8753803/pdf/"},
+  {title:"Biogas production from different food wastes using floating-drum anaerobic digester",author:"Hamad et al.",year:2025,src:"PMC",theme:"fd",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC12864234/pdf/"},
+  {title:"Enhancing and upgrading biogas and biomethane production in AD: a comprehensive review",author:"Mulu et al.",year:2023,src:"Frontiers",theme:"up",pdf:"https://www.frontiersin.org/articles/10.3389/fenrg.2023.1170133/pdf"},
+  {title:"Energy production from MSW in low-middle income countries: case study Abuja, Nigeria",author:"Goodarzi et al.",year:2023,src:"Frontiers",theme:"af",pdf:"https://www.frontiersin.org/articles/10.3389/frsus.2023.1173474/pdf"},
+  {title:"Food waste valorisation for biogas-based bioenergy in circular bioeconomy",author:"Yadav et al.",year:2022,src:"Frontiers",theme:"fd",pdf:"https://www.frontiersin.org/articles/10.3389/fenrg.2022.903775/pdf"},
+  {title:"Review of Nigeria's renewable energy policies with focus on biogas technology penetration",author:"Ogbu et al.",year:2024,src:"Frontiers",theme:"af",pdf:"https://link.springer.com/content/pdf/10.1007/s43937-024-00035-7.pdf"},
+  {title:"Critical review: food waste and poultry manure anaerobic co-digestion for biogas",author:"Nwokolo et al.",year:2025,src:"Frontiers",theme:"fd",pdf:"https://www.frontiersin.org/articles/10.3389/fsufs.2025.1695945/pdf"},
+  {title:"Review of commercial biogas systems and lessons for Africa",author:"Nwokolo et al.",year:2018,src:"MDPI",theme:"af",pdf:"https://www.mdpi.com/1996-1073/11/11/2984/pdf"},
+  {title:"Exploring biogas and biofertilizer production from abattoir wastes in Nigeria",author:"Abubaker et al.",year:2020,src:"MDPI",theme:"af",pdf:"https://www.mdpi.com/2313-4321/5/3/18/pdf"},
+  {title:"Biogas national strategies and support policies: review of selected countries",author:"Schmid et al.",year:2019,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/12/19/3803/pdf"},
+  {title:"Circular bioeconomy framework for MSW: integrating biogas, biochar and compost",author:"Neczaj & Grosser",year:2018,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/11/6/1459/pdf"},
+  {title:"Digestate characterization and use as biofertilizer: factors influencing quality",author:"Tambone et al.",year:2020,src:"MDPI",theme:"ad",pdf:"https://www.mdpi.com/2073-4395/10/2/292/pdf"},
+  {title:"Biogas production potential from food waste: potentials and barriers in developing countries",author:"Ohemeng-Ntiamoah & Datta",year:2019,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/1996-1073/12/23/4534/pdf"},
+  {title:"Effect of hydraulic retention time on biogas production from food waste in CSTR",author:"Siddiqui et al.",year:2022,src:"MDPI",theme:"de",pdf:"https://www.mdpi.com/1996-1073/15/4/1451/pdf"},
+  {title:"Production of biogas from food waste using AD with biofilm-based pretreatment",author:"Benali et al.",year:2023,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2227-9717/11/3/655/pdf"},
+  {title:"Design of biogas plant: process parameters, reactor types and optimization",author:"Manyi-Loh et al.",year:2019,src:"MDPI",theme:"de",pdf:"https://www.mdpi.com/2076-3298/6/2/23/pdf"},
+  {title:"Anaerobic digestion of food and vegetable waste: substrate types and biogas production",author:"Ali et al.",year:2022,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/1996-1073/15/13/4580/pdf"},
+  {title:"Co-digestion of food waste with organic wastes: review of synergistic effects",author:"Hagos et al.",year:2020,src:"MDPI",theme:"ad",pdf:"https://www.mdpi.com/1996-1073/13/4/912/pdf"},
+  {title:"Techno-economic assessment of MSW gasification for electricity generation",author:"Indrawan et al.",year:2021,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/13/14/3585/pdf"},
+  {title:"Micro-scale biogas production from domestic food waste: feedstock and design",author:"Sarker et al.",year:2019,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2076-3417/9/22/4984/pdf"},
+  {title:"Food waste to biogas: low-cost continuous AD for African urban informal settlements",author:"Tlou et al.",year:2024,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2571-8797/8/1/15/pdf"},
+  {title:"Reactor design for biogas production — a short review",author:"Banerjee, Prasad & Selvaraju",year:2022,src:"LIDSEN",theme:"de",pdf:"https://www.lidsen.com/journals/jept/jept-04-01-004/pdf"},
+  {title:"Techno-economic analysis of waste-to-cooking energy critical infrastructure in Nigeria",author:"Ogundari",year:2023,src:"LIDSEN",theme:"af",pdf:"https://www.lidsen.com/journals/jept/jept-05-02-013/pdf"},
+  {title:"Design of small-scale biogas plant for household use (MEJAST open access)",author:"Sarker et al.",year:2020,src:"ResearchGate",theme:"de",pdf:"https://mejast.com/data/uploads/21205.pdf"},
+  {title:"Current status of biogas upgrading for direct biomethane use (OSTI free)",author:"Sarker et al.",year:2022,src:"ResearchGate",theme:"up",pdf:"https://www.osti.gov/servlets/purl/1977613"},
+  {title:"Optimization of biogas yields in anaerobic digestion: review of techniques",author:"Ajiboye et al.",year:2024,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/378120000"},
+  {title:"Anaerobic co-digestion of OFMSW and sewage sludge: progress and challenges",author:"Tyagi et al.",year:2018,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/324734291"},
+  {title:"Biogas and its opportunities: review of applications and future outlook",author:"Kougias & Angelidaki",year:2018,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/326041673"},
+  {title:"Enhanced biogas from co-digestion of OFMSW and sewage sludge + pathway analysis",author:"Ghosh et al.",year:2020,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/336527819"},
+  {title:"Implementation of AD for OFMSW in developing countries: technical insights",author:"Orozco-Aguilera et al.",year:2023,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/374157200"},
+  {title:"Biogas upgrading and utilisation: review of current and future technologies",author:"Kapoor et al.",year:2020,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/344019034"},
+  {title:"Volatile fatty acids as key intermediates in AD: production and recovery",author:"Zacharof & Lovitt",year:2019,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/334285780"},
+  {title:"Evaluation of biogas upgrading technologies and future perspectives",author:"Kapoor et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331762716"},
+  {title:"Scale-up of anaerobic digesters from lab to full scale: critical review",author:"Krishania et al.",year:2022,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/356424799"},
+  {title:"Biogas upgrading cryogenic techniques: review",author:"Baena-Moreno et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331568745"},
+  {title:"Pressure swing adsorption for biogas upgrading — new process configuration",author:"Augelletti et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/318704340"},
+  {title:"Water scrubbing for biogas upgrading: state of the art",author:"Ryckebosch et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331399812"},
+  {title:"Municipal solid waste management and energy recovery in sub-Saharan Africa",author:"Ayeleru et al.",year:2018,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/325695183"},
+  {title:"Biogas potential of municipal solid waste in Nigerian cities: assessment",author:"Itodo et al.",year:2021,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/348791244"},
+  {title:"GIS bio-waste suitability analysis for biogas power plant, Anambra State Nigeria",author:"Okey-Onyesolu et al.",year:2021,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/344597793"},
+  {title:"AD process simulation using Aspen Plus ADM1-based model for MSW",author:"Llano et al.",year:2021,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/351434720"},
+  {title:"Biogas production from organic fraction of MSW: seasonal variation in developing countries",author:"Jain et al.",year:2019,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/327638194"},
+  {title:"Life cycle assessment of biogas production from organic waste: environmental benefits",author:"Poeschl et al.",year:2018,src:"ResearchGate",theme:"te",pdf:"https://www.researchgate.net/publication/324181734"},
+  {title:"Biogas upgrading methods: recent advancements and emerging technologies",author:"Struk et al.",year:2020,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/342440030"},
+  {title:"Emerging technologies for biogas production: critical review",author:"Struk et al.",year:2024,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/381014199"},
+  {title:"Biogas from landfilled easily degradable fraction of MSW: mining for energy",author:"Alves de Mariane et al.",year:2022,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/363006482"},
+  {title:"Optimization of methane production in AD: hybrid experimental and ML approach",author:"Various",year:2025,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/389034700"},
+  {title:"Techno-economic analysis of electricity from sewage sludge in Nigerian regions",author:"Ogbu et al.",year:2023,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/372992102"},
+  {title:"Kitchen waste to biogas: analytical calculation of biogas output and payback",author:"Bhamre et al.",year:2021,src:"ResearchGate",theme:"fd",pdf:"https://www.researchgate.net/publication/355391099"},
+  {title:"Designs of anaerobic digesters for producing biogas from municipal solid waste",author:"Madyira et al.",year:2018,src:"Academia.edu",theme:"de",pdf:"https://www.academia.edu/23597433"},
+  {title:"Anaerobic digestion of MSW: a modern waste disposal option on verge of breakthrough",author:"Various",year:2018,src:"Academia.edu",theme:"ad",pdf:"https://www.academia.edu/24676070"},
+  {title:"Exploring Nigeria's waste-to-energy potential for electricity generation",author:"Olatomiwa et al.",year:2024,src:"Frontiers",theme:"af",pdf:"https://academic.oup.com/ce/article-pdf/8/6/82/61441892/zkae088.pdf"}
+];
+
+let sk="year",sd=-1;
+function srt(k){if(sk===k)sd*=-1;else{sk=k;sd=1;}render();}
+function render(){
+  const q=document.getElementById("q").value.toLowerCase();
+  const th=document.getElementById("th").value;
+  const yr=document.getElementById("yr").value;
+  const sr=document.getElementById("src").value;
+  let data=refs.filter(r=>
+    (!q||r.title.toLowerCase().includes(q)||r.author.toLowerCase().includes(q))&&
+    (!th||r.theme===th)&&(!yr||String(r.year)===yr)&&(!sr||r.src===sr)
+  );
+  data.sort((a,b)=>{let va=a[sk],vb=b[sk];if(typeof va==="string"){va=va.toLowerCase();vb=vb.toLowerCase();}return va<vb?-sd:va>vb?sd:0;});
+  document.getElementById("cnt").textContent=data.length;
+  const tb=document.getElementById("tb");
+  if(!data.length){tb.innerHTML="";document.getElementById("none").style.display="block";return;}
+  document.getElementById("none").style.display="none";
+  tb.innerHTML=data.map((r,i)=>{
+    const t=tmap[r.theme];const s=smap[r.src]||{c:"src-rg"};
+    return `<tr><td style="color:#999;font-size:11px;">${i+1}</td><td>${r.title}</td><td style="color:#666;font-size:11px;">${r.author}</td><td style="font-weight:bold;">${r.year}</td><td><span class="badge ${s.c}">${r.src}</span></td><td><span class="badge ${t.c}">${t.l}</span></td><td><a class="dl" href="${r.pdf}" target="_blank">FREE PDF ↓</a><span class="free">✅ No paywall</span></td></tr>`;
+  }).join("");
+}
+render();
+</script>
+</body>
+</html>
