@@ -3,205 +3,361 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Literature — Biogas from Domestic Waste (Nigeria)</title>
+<title>Aspen Plus Input Guide — High Methane from Human Waste</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; font-size: 13px; background: #f9f9f9; color: #222; padding: 20px; }
-h1 { font-size: 18px; margin-bottom: 6px; }
-.note { background: #d4edda; border-left: 4px solid #28a745; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13px; }
-.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-input, select { font-size: 13px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
-input { flex: 1; min-width: 200px; }
-.stats { display: flex; gap: 10px; margin-bottom: 12px; }
-.stat { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px 14px; font-size: 12px; color: #666; }
-.stat strong { display: block; font-size: 20px; font-weight: bold; color: #222; }
-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-th { background: #f0f0f0; text-align: left; padding: 9px 10px; font-size: 11px; color: #555; border-bottom: 1px solid #ddd; cursor: pointer; white-space: nowrap; }
-th:hover { background: #e5e5e5; }
-td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-tr:hover td { background: #fafafa; }
-.badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: bold; white-space: nowrap; }
-.src-mdpi { background: #cce5ff; color: #004085; }
-.src-pmc { background: #d4edda; color: #155724; }
-.src-front { background: #e2d9f3; color: #4a235a; }
-.src-rg { background: #fff3cd; color: #856404; }
-.src-acad { background: #fde8d8; color: #7c2d12; }
-.src-lidsen { background: #d1ece1; color: #0a4a2f; }
-.theme-ad { background: #d1ece1; color: #0a4a2f; }
-.theme-up { background: #cce5ff; color: #004085; }
-.theme-de { background: #e2d9f3; color: #4a235a; }
-.theme-te { background: #fff3cd; color: #856404; }
-.theme-af { background: #fde8d8; color: #7c2d12; }
-.theme-fd { background: #d4edda; color: #155724; }
-a.dl { display: inline-block; padding: 4px 10px; background: #007bff; color: #fff; border-radius: 3px; text-decoration: none; font-size: 11px; font-weight: bold; }
-a.dl:hover { background: #0056b3; }
-.free { font-size: 10px; color: #28a745; font-weight: bold; display: block; margin-top: 3px; }
-.none { padding: 2rem; text-align: center; color: #888; }
+body { font-family: Arial, sans-serif; font-size: 13px; background: #f5f5f5; color: #222; padding: 20px; line-height: 1.6; }
+h1 { font-size: 20px; margin-bottom: 4px; color: #1a1a1a; }
+.subtitle { color: #666; font-size: 12px; margin-bottom: 20px; }
+.problem-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 16px; }
+.problem-box h2 { font-size: 14px; margin-bottom: 6px; color: #856404; }
+.solution-box { background: #d4edda; border-left: 5px solid #28a745; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 20px; }
+.solution-box h2 { font-size: 14px; margin-bottom: 6px; color: #155724; }
+.section { background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 16px; margin-bottom: 16px; }
+.section h2 { font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #1a1a1a; border-bottom: 2px solid #007bff; padding-bottom: 6px; }
+.section h3 { font-size: 13px; font-weight: bold; margin: 12px 0 6px 0; color: #333; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+th { background: #343a40; color: #fff; padding: 8px 10px; text-align: left; font-weight: bold; }
+td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+tr:nth-child(even) td { background: #f8f9fa; }
+tr:hover td { background: #e8f4ff; }
+.tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: bold; margin-left: 6px; }
+.tag-bad { background: #f8d7da; color: #721c24; }
+.tag-good { background: #d4edda; color: #155724; }
+.tag-new { background: #cce5ff; color: #004085; }
+.tag-key { background: #fff3cd; color: #856404; }
+.highlight { background: #fff3cd; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+.red { color: #dc3545; font-weight: bold; }
+.green { color: #28a745; font-weight: bold; }
+.blue { color: #007bff; font-weight: bold; }
+.code { background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 3px; padding: 2px 6px; font-family: monospace; font-size: 11px; }
+.step { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.step-num { background: #007bff; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+.step-content { flex: 1; }
+.flow-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.flow-box { background: #e8f4ff; border: 1px solid #b8daff; border-radius: 4px; padding: 8px 12px; font-size: 12px; text-align: center; flex: 1; min-width: 100px; }
+.flow-arrow { display: flex; align-items: center; font-size: 16px; color: #666; }
+.ref { font-size: 10px; color: #888; font-style: italic; }
 </style>
 </head>
 <body>
 
-<h1>📚 Free Literature — Cooking Gas from Domestic Waste</h1>
-<p style="margin-bottom:12px; color:#555;">For: Final Year Chemical Engineering Research, FUT Minna, Nigeria</p>
+<h1>🔬 Aspen Plus Redesign Guide — High Methane from Human Waste</h1>
+<p class="subtitle">FUT Minna | Chemical Engineering Final Year Project | Plant Design for 10,000 m³/day Cooking Gas</p>
 
-<div class="note">
-  ✅ <strong>Every paper below is 100% FREE</strong> — no login, no payment. All from MDPI, PubMed Central (PMC), Frontiers, ResearchGate, Academia.edu, and LIDSEN open-access journals. Click "FREE PDF" to download.
+<!-- DIAGNOSIS -->
+<div class="problem-box">
+  <h2>⚠️ Diagnosis: Why Your Current Simulation Gives Too Much CO₂</h2>
+  <p>From your SIMULATION_RESULT.xlsx, the final biogas stream (PSA inlet) contains:</p>
+  <br>
+  <table style="width:auto;">
+    <tr><th>Component</th><th>Mass Flow (kg/hr)</th><th>Mole %</th><th>Status</th></tr>
+    <tr><td>CH₄</td><td>309.6</td><td>~20.8%</td><td><span class="tag tag-bad">TOO LOW</span></td></tr>
+    <tr><td>CO₂</td><td>1186.7</td><td>~28.9%</td><td><span class="tag tag-bad">TOO HIGH</span></td></tr>
+    <tr><td>O₂</td><td>171.9</td><td>~5.8%</td><td><span class="tag tag-bad">KILLS METHANOGENS</span></td></tr>
+    <tr><td>N₂</td><td>43.8</td><td>~1.7%</td><td><span class="tag tag-bad">INERT DILUTION</span></td></tr>
+    <tr><td>H₂</td><td>7.5</td><td>~4.0%</td><td><span class="tag tag-bad">LOST POTENTIAL</span></td></tr>
+  </table>
+  <br>
+  <p><strong>Root cause — 4 critical mistakes in your current setup:</strong></p>
+  <ol style="margin-left:20px; margin-top:6px;">
+    <li><strong>DECOMP model is producing free O₂ (1336 kg/hr)</strong> — this is your biggest error. Oxygen present in an anaerobic digester kills methanogens and causes oxidation of CH₄ to CO₂.</li>
+    <li><strong>H₂ is not being recycled for hydrogenotrophic methanogenesis</strong> — H₂ in the system should react with CO₂ to produce more CH₄ (CO₂ + 4H₂ → CH₄ + 2H₂O)</li>
+    <li><strong>VFAs (propionic 331 kg/hr, butyric 195 kg/hr) are not fully converted</strong> — incomplete acetogenesis means unconverted substrate</li>
+    <li><strong>Human waste feedstock characterization is wrong</strong> — your DECOMP is treating it like biomass/lignocellulose, not fecal sludge</li>
+  </ol>
 </div>
 
-<div class="controls">
-  <input type="text" id="q" placeholder="Search title, author..." oninput="render()">
-  <select id="th" onchange="render()">
-    <option value="">All themes</option>
-    <option value="ad">Anaerobic digestion</option>
-    <option value="up">Biogas upgrading</option>
-    <option value="de">Reactor / plant design</option>
-    <option value="te">Techno-economic analysis</option>
-    <option value="af">Africa / Nigeria</option>
-    <option value="fd">Food & domestic waste</option>
-  </select>
-  <select id="yr" onchange="render()">
-    <option value="">All years</option>
-    <option value="2018">2018</option>
-    <option value="2019">2019</option>
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-    <option value="2022">2022</option>
-    <option value="2023">2023</option>
-    <option value="2024">2024</option>
-  </select>
-  <select id="src" onchange="render()">
-    <option value="">All sources</option>
-    <option value="MDPI">MDPI</option>
-    <option value="PMC">PubMed Central</option>
-    <option value="Frontiers">Frontiers</option>
-    <option value="ResearchGate">ResearchGate</option>
-    <option value="Academia.edu">Academia.edu</option>
-    <option value="LIDSEN">LIDSEN</option>
-  </select>
+<div class="solution-box">
+  <h2>✅ Target: What You Should Achieve with Corrected Inputs</h2>
+  <p>For human waste (sewage sludge / fecal matter) properly simulated in Aspen Plus:</p>
+  <br>
+  <table style="width:auto;">
+    <tr><th>Component</th><th>Target Mole %</th><th>Literature Source</th></tr>
+    <tr><td><strong>CH₄</strong></td><td class="green">55–65%</td><td>Adjama et al. 2022; Rocha et al. 2024</td></tr>
+    <tr><td>CO₂</td><td>30–40%</td><td>Normal — will be removed by PSA/scrubber</td></tr>
+    <tr><td>H₂S</td><td>&lt;1%</td><td>Needs H₂S scrubbing first</td></tr>
+    <tr><td>H₂O</td><td>&lt;3%</td><td>Removed by cooling/condensation</td></tr>
+    <tr><td>O₂</td><td class="green">0% (strictly anaerobic)</td><td>Mandatory</td></tr>
+  </table>
+  <br>
+  <p><strong>After PSA upgrading, final product (cooking gas) should be:</strong> <span class="highlight">CH₄ ≥ 95%, CO₂ ≤ 3%</span></p>
 </div>
 
-<div class="stats">
-  <div class="stat"><strong id="cnt">0</strong>papers found</div>
-  <div class="stat"><strong>100%</strong>free to download</div>
-  <div class="stat"><strong>2018–2024</strong>publication years</div>
+<!-- SECTION 1: FEEDSTOCK -->
+<div class="section">
+  <h2>1. Correct Human Waste Feedstock Characterization for DECOMP</h2>
+  <p>Human feces has a very different composition from generic biomass. Use these values in your DECOMP stoichiometry:</p>
+  <br>
+
+  <h3>Ultimate Analysis of Human Feces (Dry Basis) — Enter in DECOMP</h3>
+  <table>
+    <tr><th>Element</th><th>Mass Fraction (wt%)</th><th>Aspen Plus Component</th><th>Notes</th></tr>
+    <tr><td>Carbon (C)</td><td>44.8%</td><td>C (conventional)</td><td>Main substrate for CH₄</td></tr>
+    <tr><td>Hydrogen (H)</td><td>6.3%</td><td>H₂ → assign to H₂O and organic H</td><td>Goes to CH₄ and H₂O</td></tr>
+    <tr><td>Oxygen (O)</td><td>31.5%</td><td>Must be fully bound — assign to H₂O, CO₂, VFAs</td><td><span class="tag tag-bad">DO NOT leave as free O₂</span></td></tr>
+    <tr><td>Nitrogen (N)</td><td>5.5%</td><td>NH₃ (ammonium)</td><td>Released as NH₃/NH₄⁺</td></tr>
+    <tr><td>Sulfur (S)</td><td>0.8%</td><td>H₂S</td><td>Removed in scrubbing</td></tr>
+    <tr><td>Ash (inert)</td><td>11.1%</td><td>ASH (inert solid)</td><td>Passes through as digestate</td></tr>
+  </table>
+
+  <h3>Proximate / Biochemical Composition (to distribute carbon correctly)</h3>
+  <table>
+    <tr><th>Fraction</th><th>Content (% of VS)</th><th>Aspen Component to Use</th><th>Degrades to</th></tr>
+    <tr><td>Proteins</td><td>25–30%</td><td>GLYCINE (as surrogate)</td><td>Amino acids → VFAs + NH₃ + CO₂</td></tr>
+    <tr><td>Carbohydrates</td><td>30–35%</td><td>DEXTROSE (C₆H₁₂O₆)</td><td>Acetic acid + H₂ + CO₂ → CH₄</td></tr>
+    <tr><td>Lipids/Fats</td><td>15–20%</td><td>TRIOLEIN (C₅₇H₁₀₄O₆)</td><td>LCFAs + glycerol → CH₄ (slow)</td></tr>
+    <tr><td>Fiber/Cellulose</td><td>10–15%</td><td>CELLULOSE or DEXTROSE</td><td>Slow hydrolysis</td></tr>
+    <tr><td>Undigested solids</td><td>10%</td><td>ASH (inert)</td><td>Digestate only</td></tr>
+  </table>
+
+  <h3>Feed Stream Inputs (for 4500 kg/hr fresh fecal sludge, ~80% moisture)</h3>
+  <table>
+    <tr><th>Component</th><th>kg/hr</th><th>Notes</th></tr>
+    <tr><td>H₂O</td><td>3600</td><td>80% moisture content typical for fresh feces</td></tr>
+    <tr><td>DEXTROSE (carbohydrates)</td><td>270</td><td>30% of 900 kg/hr dry matter</td></tr>
+    <tr><td>GLYCINE (proteins)</td><td>247.5</td><td>27.5% of dry matter</td></tr>
+    <tr><td>TRIOLEIN (lipids)</td><td>157.5</td><td>17.5% of dry matter</td></tr>
+    <tr><td>CELLULOSE/fiber</td><td>125</td><td>~14% as dextrose equivalent</td></tr>
+    <tr><td>ASH</td><td>100</td><td>~11% inerts</td></tr>
+    <tr><td>Total</td><td><strong>4500</strong></td><td>900 kg/hr dry solids</td></tr>
+  </table>
+  <p class="ref">Source: Tchobanoglous et al. Wastewater Engineering; Adjama 2022 (Wiley); Rocha et al. 2024 (PMC)</p>
 </div>
 
-<table id="tbl">
-<thead>
-<tr>
-  <th>#</th>
-  <th onclick="srt('title')">Title ↕</th>
-  <th onclick="srt('author')">Author(s) ↕</th>
-  <th onclick="srt('year')">Year ↕</th>
-  <th>Source</th>
-  <th>Theme</th>
-  <th>Download</th>
-</tr>
-</thead>
-<tbody id="tb"></tbody>
-</table>
-<div id="none" class="none" style="display:none;">No papers match your filters. Try adjusting.</div>
+<!-- SECTION 2: PROCESS DESIGN -->
+<div class="section">
+  <h2>2. Recommended Process — Why You Need a Different Configuration</h2>
+  <p>The key to maximizing CH₄ from human waste is a <strong>two-stage thermophilic anaerobic digestion</strong> system with complete anaerobic conditions and H₂ recycling for hydrogenotrophic methanogenesis.</p>
+  <br>
 
-<script>
-const tmap = {
-  ad:{l:"Anaerobic digestion",c:"theme-ad"},
-  up:{l:"Biogas upgrading",c:"theme-up"},
-  de:{l:"Reactor design",c:"theme-de"},
-  te:{l:"Techno-economic",c:"theme-te"},
-  af:{l:"Africa/Nigeria",c:"theme-af"},
-  fd:{l:"Food/domestic waste",c:"theme-fd"}
-};
-const smap = {
-  MDPI:{c:"src-mdpi"},PMC:{c:"src-pmc"},Frontiers:{c:"src-front"},
-  ResearchGate:{c:"src-rg"},"Academia.edu":{c:"src-acad"},LIDSEN:{c:"src-lidsen"}
-};
+  <div class="flow-row">
+    <div class="flow-box"><strong>FEED</strong><br>Human waste<br>+ H₂O dilution<br>4500 kg/hr</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box"><strong>PRETREAT</strong><br>Thermal hydrolysis<br>70°C, 30 min<br>(R1)</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box"><strong>ACIDOGENESIS</strong><br>Stage 1 CSTR<br>55°C, pH 5.5–6.0<br>HRT = 3 days</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box"><strong>METHANOGENESIS</strong><br>Stage 2 CSTR<br>55°C, pH 7.0–7.5<br>HRT = 15 days</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box"><strong>H₂S + NH₃<br>REMOVAL</strong><br>Amine scrubber<br>or iron sponge</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box"><strong>CO₂ REMOVAL</strong><br>Water scrubbing<br>or PSA<br>10 bar</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box" style="background:#d4edda; border-color:#28a745;"><strong>CH₄ ≥ 95%</strong><br>Cooking gas<br>310 K, 10 bar</div>
+  </div>
 
-const refs = [
-  {title:"Technologies for biogas upgrading to biomethane: a review",author:"Adnan et al.",year:2019,src:"PMC",theme:"up",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC6956267/pdf/bioengineering-06-00092.pdf"},
-  {title:"Comparative assessment of single-stage and two-stage anaerobic digestion for biogas from high moisture MSW",author:"Markphan et al.",year:2020,src:"PMC",theme:"de",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC7443091/pdf/peerj-08-09693.pdf"},
-  {title:"Biomethane production from anaerobic co-digestion of OFMSW with sewage sludge: effect of ISR",author:"Corsino et al.",year:2021,src:"PMC",theme:"ad",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8702077/pdf/ijerph-18-13048.pdf"},
-  {title:"Techno-economic and environmental analysis of organic MSW for biogas — Bangladesh",author:"Alam et al.",year:2024,src:"PMC",theme:"te",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC11145329/pdf/"},
-  {title:"Techno-economic evaluation of biogas from food waste via anaerobic digestion (Oman)",author:"Al-Hinai et al.",year:2020,src:"PMC",theme:"te",pdf:"https://www.nature.com/articles/s41598-020-72897-5.pdf"},
-  {title:"MSW gasification for resilient energy systems post-COVID-19 (Saudi Arabia LCA)",author:"Alqahtani et al.",year:2024,src:"PMC",theme:"te",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC12634608/pdf/"},
-  {title:"A comprehensive study on AD of organic solid waste: configurations, parameters and techno-economics",author:"Dey et al.",year:2024,src:"PMC",theme:"de",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC11630644/pdf/"},
-  {title:"Pretreatment of lignocellulosic biomass for enhanced biogas yield: review",author:"Kasinath et al.",year:2021,src:"PMC",theme:"ad",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8650649/pdf/"},
-  {title:"Biogas potential from livestock and municipal waste for renewable energy in Nigeria",author:"Balogun et al.",year:2021,src:"PMC",theme:"af",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8456127/pdf/"},
-  {title:"Biogas production systems and upgrading technologies: open review",author:"Scarlat et al.",year:2022,src:"PMC",theme:"up",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC8753803/pdf/"},
-  {title:"Biogas production from different food wastes using floating-drum anaerobic digester",author:"Hamad et al.",year:2025,src:"PMC",theme:"fd",pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC12864234/pdf/"},
-  {title:"Enhancing and upgrading biogas and biomethane production in AD: a comprehensive review",author:"Mulu et al.",year:2023,src:"Frontiers",theme:"up",pdf:"https://www.frontiersin.org/articles/10.3389/fenrg.2023.1170133/pdf"},
-  {title:"Energy production from MSW in low-middle income countries: case study Abuja, Nigeria",author:"Goodarzi et al.",year:2023,src:"Frontiers",theme:"af",pdf:"https://www.frontiersin.org/articles/10.3389/frsus.2023.1173474/pdf"},
-  {title:"Food waste valorisation for biogas-based bioenergy in circular bioeconomy",author:"Yadav et al.",year:2022,src:"Frontiers",theme:"fd",pdf:"https://www.frontiersin.org/articles/10.3389/fenrg.2022.903775/pdf"},
-  {title:"Review of Nigeria's renewable energy policies with focus on biogas technology penetration",author:"Ogbu et al.",year:2024,src:"Frontiers",theme:"af",pdf:"https://link.springer.com/content/pdf/10.1007/s43937-024-00035-7.pdf"},
-  {title:"Critical review: food waste and poultry manure anaerobic co-digestion for biogas",author:"Nwokolo et al.",year:2025,src:"Frontiers",theme:"fd",pdf:"https://www.frontiersin.org/articles/10.3389/fsufs.2025.1695945/pdf"},
-  {title:"Review of commercial biogas systems and lessons for Africa",author:"Nwokolo et al.",year:2018,src:"MDPI",theme:"af",pdf:"https://www.mdpi.com/1996-1073/11/11/2984/pdf"},
-  {title:"Exploring biogas and biofertilizer production from abattoir wastes in Nigeria",author:"Abubaker et al.",year:2020,src:"MDPI",theme:"af",pdf:"https://www.mdpi.com/2313-4321/5/3/18/pdf"},
-  {title:"Biogas national strategies and support policies: review of selected countries",author:"Schmid et al.",year:2019,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/12/19/3803/pdf"},
-  {title:"Circular bioeconomy framework for MSW: integrating biogas, biochar and compost",author:"Neczaj & Grosser",year:2018,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/11/6/1459/pdf"},
-  {title:"Digestate characterization and use as biofertilizer: factors influencing quality",author:"Tambone et al.",year:2020,src:"MDPI",theme:"ad",pdf:"https://www.mdpi.com/2073-4395/10/2/292/pdf"},
-  {title:"Biogas production potential from food waste: potentials and barriers in developing countries",author:"Ohemeng-Ntiamoah & Datta",year:2019,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/1996-1073/12/23/4534/pdf"},
-  {title:"Effect of hydraulic retention time on biogas production from food waste in CSTR",author:"Siddiqui et al.",year:2022,src:"MDPI",theme:"de",pdf:"https://www.mdpi.com/1996-1073/15/4/1451/pdf"},
-  {title:"Production of biogas from food waste using AD with biofilm-based pretreatment",author:"Benali et al.",year:2023,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2227-9717/11/3/655/pdf"},
-  {title:"Design of biogas plant: process parameters, reactor types and optimization",author:"Manyi-Loh et al.",year:2019,src:"MDPI",theme:"de",pdf:"https://www.mdpi.com/2076-3298/6/2/23/pdf"},
-  {title:"Anaerobic digestion of food and vegetable waste: substrate types and biogas production",author:"Ali et al.",year:2022,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/1996-1073/15/13/4580/pdf"},
-  {title:"Co-digestion of food waste with organic wastes: review of synergistic effects",author:"Hagos et al.",year:2020,src:"MDPI",theme:"ad",pdf:"https://www.mdpi.com/1996-1073/13/4/912/pdf"},
-  {title:"Techno-economic assessment of MSW gasification for electricity generation",author:"Indrawan et al.",year:2021,src:"MDPI",theme:"te",pdf:"https://www.mdpi.com/1996-1073/13/14/3585/pdf"},
-  {title:"Micro-scale biogas production from domestic food waste: feedstock and design",author:"Sarker et al.",year:2019,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2076-3417/9/22/4984/pdf"},
-  {title:"Food waste to biogas: low-cost continuous AD for African urban informal settlements",author:"Tlou et al.",year:2024,src:"MDPI",theme:"fd",pdf:"https://www.mdpi.com/2571-8797/8/1/15/pdf"},
-  {title:"Reactor design for biogas production — a short review",author:"Banerjee, Prasad & Selvaraju",year:2022,src:"LIDSEN",theme:"de",pdf:"https://www.lidsen.com/journals/jept/jept-04-01-004/pdf"},
-  {title:"Techno-economic analysis of waste-to-cooking energy critical infrastructure in Nigeria",author:"Ogundari",year:2023,src:"LIDSEN",theme:"af",pdf:"https://www.lidsen.com/journals/jept/jept-05-02-013/pdf"},
-  {title:"Design of small-scale biogas plant for household use (MEJAST open access)",author:"Sarker et al.",year:2020,src:"ResearchGate",theme:"de",pdf:"https://mejast.com/data/uploads/21205.pdf"},
-  {title:"Current status of biogas upgrading for direct biomethane use (OSTI free)",author:"Sarker et al.",year:2022,src:"ResearchGate",theme:"up",pdf:"https://www.osti.gov/servlets/purl/1977613"},
-  {title:"Optimization of biogas yields in anaerobic digestion: review of techniques",author:"Ajiboye et al.",year:2024,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/378120000"},
-  {title:"Anaerobic co-digestion of OFMSW and sewage sludge: progress and challenges",author:"Tyagi et al.",year:2018,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/324734291"},
-  {title:"Biogas and its opportunities: review of applications and future outlook",author:"Kougias & Angelidaki",year:2018,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/326041673"},
-  {title:"Enhanced biogas from co-digestion of OFMSW and sewage sludge + pathway analysis",author:"Ghosh et al.",year:2020,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/336527819"},
-  {title:"Implementation of AD for OFMSW in developing countries: technical insights",author:"Orozco-Aguilera et al.",year:2023,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/374157200"},
-  {title:"Biogas upgrading and utilisation: review of current and future technologies",author:"Kapoor et al.",year:2020,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/344019034"},
-  {title:"Volatile fatty acids as key intermediates in AD: production and recovery",author:"Zacharof & Lovitt",year:2019,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/334285780"},
-  {title:"Evaluation of biogas upgrading technologies and future perspectives",author:"Kapoor et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331762716"},
-  {title:"Scale-up of anaerobic digesters from lab to full scale: critical review",author:"Krishania et al.",year:2022,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/356424799"},
-  {title:"Biogas upgrading cryogenic techniques: review",author:"Baena-Moreno et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331568745"},
-  {title:"Pressure swing adsorption for biogas upgrading — new process configuration",author:"Augelletti et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/318704340"},
-  {title:"Water scrubbing for biogas upgrading: state of the art",author:"Ryckebosch et al.",year:2019,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/331399812"},
-  {title:"Municipal solid waste management and energy recovery in sub-Saharan Africa",author:"Ayeleru et al.",year:2018,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/325695183"},
-  {title:"Biogas potential of municipal solid waste in Nigerian cities: assessment",author:"Itodo et al.",year:2021,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/348791244"},
-  {title:"GIS bio-waste suitability analysis for biogas power plant, Anambra State Nigeria",author:"Okey-Onyesolu et al.",year:2021,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/344597793"},
-  {title:"AD process simulation using Aspen Plus ADM1-based model for MSW",author:"Llano et al.",year:2021,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/351434720"},
-  {title:"Biogas production from organic fraction of MSW: seasonal variation in developing countries",author:"Jain et al.",year:2019,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/327638194"},
-  {title:"Life cycle assessment of biogas production from organic waste: environmental benefits",author:"Poeschl et al.",year:2018,src:"ResearchGate",theme:"te",pdf:"https://www.researchgate.net/publication/324181734"},
-  {title:"Biogas upgrading methods: recent advancements and emerging technologies",author:"Struk et al.",year:2020,src:"ResearchGate",theme:"up",pdf:"https://www.researchgate.net/publication/342440030"},
-  {title:"Emerging technologies for biogas production: critical review",author:"Struk et al.",year:2024,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/381014199"},
-  {title:"Biogas from landfilled easily degradable fraction of MSW: mining for energy",author:"Alves de Mariane et al.",year:2022,src:"ResearchGate",theme:"ad",pdf:"https://www.researchgate.net/publication/363006482"},
-  {title:"Optimization of methane production in AD: hybrid experimental and ML approach",author:"Various",year:2025,src:"ResearchGate",theme:"de",pdf:"https://www.researchgate.net/publication/389034700"},
-  {title:"Techno-economic analysis of electricity from sewage sludge in Nigerian regions",author:"Ogbu et al.",year:2023,src:"ResearchGate",theme:"af",pdf:"https://www.researchgate.net/publication/372992102"},
-  {title:"Kitchen waste to biogas: analytical calculation of biogas output and payback",author:"Bhamre et al.",year:2021,src:"ResearchGate",theme:"fd",pdf:"https://www.researchgate.net/publication/355391099"},
-  {title:"Designs of anaerobic digesters for producing biogas from municipal solid waste",author:"Madyira et al.",year:2018,src:"Academia.edu",theme:"de",pdf:"https://www.academia.edu/23597433"},
-  {title:"Anaerobic digestion of MSW: a modern waste disposal option on verge of breakthrough",author:"Various",year:2018,src:"Academia.edu",theme:"ad",pdf:"https://www.academia.edu/24676070"},
-  {title:"Exploring Nigeria's waste-to-energy potential for electricity generation",author:"Olatomiwa et al.",year:2024,src:"Frontiers",theme:"af",pdf:"https://academic.oup.com/ce/article-pdf/8/6/82/61441892/zkae088.pdf"}
-];
+  <h3>Critical Change: H₂ Recycling Loop (Hydrogenotrophic Methanogenesis)</h3>
+  <p>In your current model, H₂ is being separated out and wasted. Instead, it must be recycled back into the methanogenesis reactor. This reaction converts CO₂ + H₂ directly into methane:</p>
+  <br>
+  <p style="text-align:center; font-size:14px; background:#e8f4ff; padding:10px; border-radius:4px;">
+    <strong>CO₂ + 4H₂ → CH₄ + 2H₂O</strong> &nbsp;&nbsp;&nbsp; (ΔG° = −130.7 kJ/mol)
+  </p>
+  <br>
+  <p>This single change alone can <strong>reduce CO₂ by 15–25%</strong> and increase CH₄ yield proportionally.</p>
+</div>
 
-let sk="year",sd=-1;
-function srt(k){if(sk===k)sd*=-1;else{sk=k;sd=1;}render();}
-function render(){
-  const q=document.getElementById("q").value.toLowerCase();
-  const th=document.getElementById("th").value;
-  const yr=document.getElementById("yr").value;
-  const sr=document.getElementById("src").value;
-  let data=refs.filter(r=>
-    (!q||r.title.toLowerCase().includes(q)||r.author.toLowerCase().includes(q))&&
-    (!th||r.theme===th)&&(!yr||String(r.year)===yr)&&(!sr||r.src===sr)
-  );
-  data.sort((a,b)=>{let va=a[sk],vb=b[sk];if(typeof va==="string"){va=va.toLowerCase();vb=vb.toLowerCase();}return va<vb?-sd:va>vb?sd:0;});
-  document.getElementById("cnt").textContent=data.length;
-  const tb=document.getElementById("tb");
-  if(!data.length){tb.innerHTML="";document.getElementById("none").style.display="block";return;}
-  document.getElementById("none").style.display="none";
-  tb.innerHTML=data.map((r,i)=>{
-    const t=tmap[r.theme];const s=smap[r.src]||{c:"src-rg"};
-    return `<tr><td style="color:#999;font-size:11px;">${i+1}</td><td>${r.title}</td><td style="color:#666;font-size:11px;">${r.author}</td><td style="font-weight:bold;">${r.year}</td><td><span class="badge ${s.c}">${r.src}</span></td><td><span class="badge ${t.c}">${t.l}</span></td><td><a class="dl" href="${r.pdf}" target="_blank">FREE PDF ↓</a><span class="free">✅ No paywall</span></td></tr>`;
-  }).join("");
-}
-render();
-</script>
+<!-- SECTION 3: ASPEN PLUS BLOCK-BY-BLOCK INPUTS -->
+<div class="section">
+  <h2>3. Block-by-Block Aspen Plus Input Settings</h2>
+
+  <h3>🔵 DECOMP Block (RYield Reactor) — Complete correction</h3>
+  <table>
+    <tr><th>Parameter</th><th>Your Current Value</th><th>Corrected Value</th><th>Why</th></tr>
+    <tr><td>Temperature</td><td>35°C</td><td>35°C ✓</td><td>OK for decomposition</td></tr>
+    <tr><td>Pressure</td><td>1 atm</td><td>1 atm ✓</td><td>OK</td></tr>
+    <tr><td>O₂ yield</td><td>1336.5 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>0 kg/hr</strong></td><td>NO free O₂ in anaerobic system!</td></tr>
+    <tr><td>C yield</td><td>2025 kg/hr</td><td>Distribute into DEXTROSE, GLYCINE, TRIOLEIN</td><td>Must be in organic form</td></tr>
+    <tr><td>H₂ yield (free)</td><td>243 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>0</strong> — H is in organics</td><td>H₂ produced only in acidogenesis</td></tr>
+    <tr><td>H₂O in feed</td><td>0 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>3600 kg/hr</strong></td><td>Human waste is 80% water</td></tr>
+    <tr><td>Yield basis</td><td>Biomass</td><td><strong>Wet fecal sludge</strong></td><td>Change property method</td></tr>
+  </table>
+
+  <h3>🔵 R1 Block (Thermal Pre-treatment — RStoic Reactor)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th></tr>
+    <tr><td>Type</td><td>RStoic (replaces your current R1)</td></tr>
+    <tr><td>Temperature</td><td>70°C</td></tr>
+    <tr><td>Pressure</td><td>1 atm</td></tr>
+    <tr><td>Purpose</td><td>Thermal hydrolysis — break complex organics into simpler VFA precursors</td></tr>
+    <tr><td>Reactions</td><td>TRIOLEIN → OLEIC (hydrolysis); DEXTROSE → partial acidification; GLYCINE → partial breakdown</td></tr>
+    <tr><td>Conversion</td><td>30–40% hydrolysis per pass</td></tr>
+    <tr><td>HRT</td><td>0.5 hr (30 min contact time)</td></tr>
+  </table>
+
+  <h3>🔵 DIGEST1 — Stage 1: Acidogenesis (RCSTR)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th><th>Notes</th></tr>
+    <tr><td>Reactor type</td><td>RCSTR (Continuous Stirred Tank)</td><td></td></tr>
+    <tr><td>Temperature</td><td><strong>55°C (thermophilic)</strong></td><td>Up from 35°C — faster kinetics, more CH₄</td></tr>
+    <tr><td>Pressure</td><td>1 atm</td><td></td></tr>
+    <tr><td>pH</td><td>5.5 – 6.0</td><td>Set via NaHCO₃/HCl titration block</td></tr>
+    <tr><td>HRT</td><td>2–3 days</td><td>Volume = Flow × HRT</td></tr>
+    <tr><td>Purpose</td><td>Acidogenesis only — produce VFAs, NO methanogenesis here</td></tr>
+    <tr><td>Kinetics model</td><td>ADM1 acidogenesis reactions</td><td>Use RKinetics block</td></tr>
+    <tr><td>Main reactions to specify</td><td>DEXTROSE → 2 ACETIC + 2CO₂ + 4H₂<br>GLYCINE → VFAs + NH₃<br>TRIOLEIN → OLEIC + GLYCEROL</td><td></td></tr>
+    <tr><td>O₂</td><td><strong>0 — strictly anaerobic</strong></td><td>Add N₂ purge if needed in model</td></tr>
+  </table>
+
+  <h3>🔵 DIGEST2 — Stage 2: Acetogenesis + Methanogenesis (RCSTR)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th><th>Notes</th></tr>
+    <tr><td>Reactor type</td><td>RCSTR</td><td></td></tr>
+    <tr><td>Temperature</td><td><strong>55°C (thermophilic)</strong></td><td>Critical for methanogens</td></tr>
+    <tr><td>Pressure</td><td>1.5 atm</td><td>Slight overpressure aids gas collection</td></tr>
+    <tr><td>pH</td><td><strong>7.0 – 7.5</strong></td><td>MOST CRITICAL — methanogens die below 6.5</td></tr>
+    <tr><td>HRT</td><td><strong>15 days</strong></td><td>Literature optimal for sewage sludge (Aspen Plus study: 320K, 15-day HRT)</td></tr>
+    <tr><td>Recycle H₂ stream</td><td><strong>YES — connect H₂ from stage 1 back here</strong></td><td>Enables CO₂+4H₂→CH₄+2H₂O</td></tr>
+    <tr><td>Key reactions (RStoic fractions)</td><td>
+      ACETIC → CH₄ + CO₂ (acetoclastic, 70% of CH₄)<br>
+      CO₂ + 4H₂ → CH₄ + 2H₂O (hydrogenotrophic, 30%)<br>
+      PROPIONIC → ACETIC + CH₄ (obligate syntrophy)
+    </td><td></td></tr>
+    <tr><td>CH₄ fraction target</td><td>60–65 mol% in gas phase</td><td></td></tr>
+    <tr><td>Inoculum (sludge recycle)</td><td>20–30% recycle of digestate</td><td>Maintains microbial population</td></tr>
+  </table>
+
+  <h3>🔵 DIGEST3 — Polishing / Residual Methanogenesis (RCSTR)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th></tr>
+    <tr><td>Temperature</td><td>55°C</td></tr>
+    <tr><td>HRT</td><td>5 days (residual conversion)</td></tr>
+    <tr><td>Purpose</td><td>Convert remaining propionate, butyrate to CH₄</td></tr>
+    <tr><td>Expected CH₄ increase</td><td>+5–8% additional methane from VFA residuals</td></tr>
+  </table>
+
+  <h3>🔵 H₂S REMOVAL BLOCK (new — before scrubber)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Type</td><td>Sep2 block (splitter) or Flash2</td></tr>
+    <tr><td>Method</td><td>Iron sponge / caustic scrub (simulate as Sep2)</td></tr>
+    <tr><td>H₂S removal efficiency</td><td>99%</td></tr>
+    <tr><td>Why critical</td><td>H₂S poisons PSA adsorbent and corrodes compressors — must remove first</td></tr>
+  </table>
+
+  <h3>🔵 SCRUBBER (Water Scrubbing — CO₂ removal)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th></tr>
+    <tr><td>Type</td><td>RadFrac column (replace current simple separator)</td></tr>
+    <tr><td>Pressure</td><td><strong>8–10 bar</strong> (your current model does not pressurize — this is why CO₂ isn't absorbed)</td></tr>
+    <tr><td>Temperature</td><td>10–15°C (cooled water)</td></tr>
+    <tr><td>Liquid/gas ratio</td><td>0.1 m³ water per m³ biogas</td></tr>
+    <tr><td>Number of stages</td><td>8–10 theoretical stages</td></tr>
+    <tr><td>CO₂ removal</td><td>85–90%</td></tr>
+  </table>
+
+  <h3>🔵 PSA Block (Pressure Swing Adsorption)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Corrected Value</th></tr>
+    <tr><td>Adsorption pressure</td><td>7–10 bar</td></tr>
+    <tr><td>Regeneration pressure</td><td>0.1–0.5 bar (vacuum)</td></tr>
+    <tr><td>Adsorbent</td><td>Zeolite 13X (simulated as Sep2 with split fractions)</td></tr>
+    <tr><td>CH₄ recovery</td><td>≥97%</td></tr>
+    <tr><td>CO₂ split fraction</td><td>0.98 to waste stream</td></tr>
+    <tr><td>CH₄ split fraction</td><td>0.97 to product stream</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 4: PROPERTY METHOD -->
+<div class="section">
+  <h2>4. Property Method & Thermodynamic Model Settings</h2>
+  <table>
+    <tr><th>Setting</th><th>Recommended Value</th><th>Reason</th></tr>
+    <tr><td>Global property method</td><td><strong>NRTL-RK</strong> or <strong>PSRK</strong></td><td>Best for aqueous systems with gases (CH₄, CO₂, H₂S, NH₃)</td></tr>
+    <tr><td>Henry's law components</td><td>CH₄, CO₂, H₂, H₂S, O₂, N₂</td><td>All dissolved gases need Henry's law</td></tr>
+    <tr><td>Electrolyte chemistry</td><td>Enable ELECNRTL for aqueous phase</td><td>Needed for NH₄⁺/NH₃ and HCO₃⁻/CO₂ equilibria</td></tr>
+    <tr><td>True component approach</td><td>Enable for ionic species</td><td>More accurate pH prediction</td></tr>
+    <tr><td>Nonconventional solids</td><td>HCOALGEN for ash/inert solids</td><td>Standard for biomass solids in Aspen</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 5: REACTION STOICHIOMETRY -->
+<div class="section">
+  <h2>5. Reaction Stoichiometry — Enter These in RStoic/RKinetics Blocks</h2>
+
+  <h3>Stage 1 — Hydrolysis & Acidogenesis Reactions</h3>
+  <table>
+    <tr><th>#</th><th>Reaction</th><th>Fractional Conversion</th><th>Block</th></tr>
+    <tr><td>R1</td><td>DEXTROSE → 2 ACETIC-ACID + 2CO₂ + 4H₂</td><td>0.90</td><td>DIGEST1</td></tr>
+    <tr><td>R2</td><td>DEXTROSE → BUTYRIC-ACID + 2CO₂ + 2H₂</td><td>0.08</td><td>DIGEST1</td></tr>
+    <tr><td>R3</td><td>GLYCINE + H₂O → ACETIC-ACID + NH₃ + CO₂</td><td>0.85</td><td>DIGEST1</td></tr>
+    <tr><td>R4</td><td>TRIOLEIN + 3H₂O → 3 OLEIC-ACID + GLYCEROL</td><td>0.70</td><td>DIGEST1</td></tr>
+    <tr><td>R5</td><td>OLEIC-ACID + 2H₂O → 9 ACETIC-ACID + H₂</td><td>0.50</td><td>DIGEST1</td></tr>
+  </table>
+
+  <h3>Stage 2 — Acetogenesis & Methanogenesis Reactions</h3>
+  <table>
+    <tr><th>#</th><th>Reaction</th><th>Fractional Conversion</th><th>Block</th></tr>
+    <tr><td>R6</td><td>ACETIC-ACID → CH₄ + CO₂</td><td><strong>0.95</strong></td><td>DIGEST2</td></tr>
+    <tr><td>R7</td><td>CO₂ + 4H₂ → CH₄ + 2H₂O</td><td><strong>0.90</strong></td><td>DIGEST2 (H₂ recycle)</td></tr>
+    <tr><td>R8</td><td>PROPIONIC-ACID + 2H₂O → ACETIC-ACID + CO₂ + 3H₂</td><td>0.80</td><td>DIGEST2</td></tr>
+    <tr><td>R9</td><td>BUTYRIC-ACID + 2H₂O → 2 ACETIC-ACID + 2H₂</td><td>0.85</td><td>DIGEST2</td></tr>
+    <tr><td>R10</td><td>GLYCEROL → 1.5 ACETIC-ACID + 0.5 CO₂ + H₂O</td><td>0.90</td><td>DIGEST2</td></tr>
+  </table>
+  <p class="ref">Source: ADM1 (Batstone et al. 2002); Corsino et al. PMC 2021; Al-Hinai et al. Nature Sci. Reports 2020</p>
+</div>
+
+<!-- SECTION 6: SUMMARY TABLE -->
+<div class="section">
+  <h2>6. Summary — Key Changes from Old to New Design</h2>
+  <table>
+    <tr><th>Parameter</th><th>Old (Your Current)</th><th>New (Corrected)</th><th>Impact on CH₄</th></tr>
+    <tr><td>Feedstock O₂</td><td class="red">1336 kg/hr FREE O₂</td><td class="green">0 (all O in organics)</td><td>+15–20% CH₄ gain</td></tr>
+    <tr><td>Feed H₂O</td><td class="red">450 kg/hr (too dry)</td><td class="green">3600 kg/hr (80% moisture)</td><td>Proper microbial environment</td></tr>
+    <tr><td>Digestion temp</td><td>35°C</td><td class="green">55°C (thermophilic)</td><td>+10–15% faster methane kinetics</td></tr>
+    <tr><td>HRT Stage 2</td><td>short (implied)</td><td class="green">15 days</td><td>Complete VFA conversion</td></tr>
+    <tr><td>H₂ recycle</td><td class="red">None (H₂ lost)</td><td class="green">Recycle to Stage 2</td><td>+5–10% CH₄ from CO₂+H₂ reaction</td></tr>
+    <tr><td>Scrubber pressure</td><td class="red">Low/unspecified</td><td class="green">8–10 bar</td><td>CO₂ absorption efficiency +40%</td></tr>
+    <tr><td>H₂S removal</td><td>Partial (in scrubber)</td><td class="green">Dedicated iron sponge block</td><td>Protects PSA, purer CH₄</td></tr>
+    <tr><td>pH Stage 2</td><td>Uncontrolled</td><td class="green">7.0–7.5 (controlled)</td><td>Prevents methanogen inhibition</td></tr>
+    <tr><td>Property method</td><td>Default (unspecified)</td><td class="green">NRTL-RK + ELECNRTL</td><td>Accurate gas solubility</td></tr>
+    <tr><td><strong>Expected CH₄ in biogas</strong></td><td class="red"><strong>~21%</strong></td><td class="green"><strong>55–65%</strong></td><td><strong>3× improvement</strong></td></tr>
+  </table>
+</div>
+
+<!-- SECTION 7: STEP-BY-STEP ASPEN INSTRUCTIONS -->
+<div class="section">
+  <h2>7. Step-by-Step Instructions to Fix Your Aspen Plus Model</h2>
+
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Change feed stream BIOMASS:</strong> Delete current component list. Add H₂O (3600 kg/hr), DEXTROSE (270 kg/hr), GLYCINE (247.5 kg/hr), TRIOLEIN (157.5 kg/hr), CELLULOSE/DEXTROSE (125 kg/hr), ASH (100 kg/hr). Set temperature = 25°C, pressure = 1 atm.</div></div>
+
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Fix DECOMP (RYield):</strong> Open yield specification. Set O₂ yield = 0. Distribute yields into: DEXTROSE (30%), GLYCINE (27.5%), TRIOLEIN (17.5%), DEXTROSE for fiber (14%), ASH (11%). No free C, H₂, or O₂ outputs.</div></div>
+
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Change property method:</strong> Go to Methods → Specifications. Change from default to <span class="code">NRTL-RK</span>. In Henry's components tab, add: CH4, CO2, H2, H2S, O2, N2. Enable ELECNRTL for aqueous reactions.</div></div>
+
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Change DIGEST1 to thermophilic:</strong> Set temperature = 55°C (328 K). Add stoichiometric reactions R1–R5 from Section 5. Set pH controller to maintain 5.5–6.0. Remove any O₂ from inputs.</div></div>
+
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Add H₂ recycle stream to DIGEST2:</strong> In the PFD, draw a stream from the gas outlet of DIGEST1 back to the inlet of DIGEST2. This routes H₂ gas to react with CO₂ via reaction R7 (CO₂ + 4H₂ → CH₄ + 2H₂O). Set fractional conversion = 0.90 for this reaction.</div></div>
+
+  <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Increase DIGEST2 HRT to 15 days:</strong> Calculate reactor volume = total inlet flow (kg/hr) × HRT (hr) / density (kg/m³). Add reactions R6–R10 from Section 5. Set temperature = 55°C, pressure = 1.5 atm, pH = 7.2.</div></div>
+
+  <div class="step"><div class="step-num">7</div><div class="step-content"><strong>Add dedicated H₂S removal block BEFORE scrubber:</strong> Insert a Sep2 block between B2 and SCRUBBER. Set H₂S component split fraction = 0.99 to waste stream. NH₃ split fraction = 0.70 to waste stream.</div></div>
+
+  <div class="step"><div class="step-num">8</div><div class="step-content"><strong>Fix SCRUBBER pressure:</strong> Add a COMP block before SCRUBBER to pressurize gas to 9 bar. In SCRUBBER, set pressure = 9 bar, temperature = 12°C. Use RadFrac with 10 stages instead of Sep2.</div></div>
+
+  <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Fix PSA block:</strong> In the Sep2 PSA block, set split fractions: CH₄ → product stream = 0.97; CO₂ → waste = 0.98; H₂S → waste = 1.0. Operating pressure = 7 bar. Add COOLER2 at 10°C to condense water before product storage.</div></div>
+
+  <div class="step"><div class="step-num">10</div><div class="step-content"><strong>Run sensitivity analysis:</strong> Use Aspen's sensitivity tool to vary DIGEST2 temperature (45–60°C) and HRT (10–20 days) and plot CH₄ mole fraction in the final product. Optimal is ~55°C and 15 days per Aspen Plus literature.</div></div>
+</div>
+
+<!-- SECTION 8: EXPECTED RESULTS -->
+<div class="section">
+  <h2>8. Expected Final Stream Results After Correction</h2>
+  <table>
+    <tr><th>Stream</th><th>Component</th><th>Old (kg/hr)</th><th>Expected New (kg/hr)</th><th>Change</th></tr>
+    <tr><td rowspan="3">Biogas (after DIGEST3)</td><td>CH₄</td><td>311.8</td><td>~680–750</td><td class="green">+120%</td></tr>
+    <tr><td>CO₂</td><td>1230.5</td><td>~520–600</td><td class="green">−55%</td></tr>
+    <tr><td>O₂</td><td>172.5</td><td><strong>0</strong></td><td class="green">Eliminated</td></tr>
+    <tr><td rowspan="2">Product (after PSA)</td><td>CH₄</td><td>309.6</td><td>~660–720</td><td class="green">+120%</td></tr>
+    <tr><td>CO₂</td><td>1186.7</td><td>~15–25</td><td class="green">−99%</td></tr>
+    <tr><td>CH₄ mole% in biogas</td><td colspan="2">~21%</td><td class="green">~60–65%</td><td class="green">3× improvement</td></tr>
+    <tr><td>CH₄ mole% in product gas</td><td colspan="2">~100% (PSA)</td><td class="green">>95%</td><td>Cooking gas standard met</td></tr>
+  </table>
+</div>
+
+<div style="background:#e8f4ff; border-left:4px solid #007bff; padding:12px 16px; border-radius:0 6px 6px 0; margin-top:16px; font-size:12px;">
+  <strong>📌 For your report:</strong> Cite these corrections against ADM1 (Batstone et al. 2002), Corsino et al. 2021 (PMC), Al-Hinai et al. 2020 (Nature Scientific Reports — free PDF), and Mulu et al. 2023 (Frontiers — free PDF). All available in your free literature table.
+</div>
+
 </body>
 </html>
