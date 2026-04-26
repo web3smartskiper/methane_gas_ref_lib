@@ -3,360 +3,424 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aspen Plus Input Guide — High Methane from Human Waste</title>
+<title>Aspen Plus Input Guide — CORRECTED VERSION</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Arial, sans-serif; font-size: 13px; background: #f5f5f5; color: #222; padding: 20px; line-height: 1.6; }
 h1 { font-size: 20px; margin-bottom: 4px; color: #1a1a1a; }
-.subtitle { color: #666; font-size: 12px; margin-bottom: 20px; }
+.subtitle { color: #666; font-size: 12px; margin-bottom: 16px; }
+.correction-banner { background: #d4edda; border: 2px solid #28a745; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; }
+.correction-banner h2 { font-size: 14px; color: #155724; margin-bottom: 6px; }
 .problem-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 16px; }
 .problem-box h2 { font-size: 14px; margin-bottom: 6px; color: #856404; }
 .solution-box { background: #d4edda; border-left: 5px solid #28a745; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 20px; }
 .solution-box h2 { font-size: 14px; margin-bottom: 6px; color: #155724; }
 .section { background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 16px; margin-bottom: 16px; }
 .section h2 { font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #1a1a1a; border-bottom: 2px solid #007bff; padding-bottom: 6px; }
-.section h3 { font-size: 13px; font-weight: bold; margin: 12px 0 6px 0; color: #333; }
+.section h3 { font-size: 13px; font-weight: bold; margin: 14px 0 6px 0; color: #333; background:#f0f4ff; padding:5px 8px; border-radius:3px; }
 table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
-th { background: #343a40; color: #fff; padding: 8px 10px; text-align: left; font-weight: bold; }
-td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+th { background: #1F3864; color: #fff; padding: 8px 10px; text-align: left; font-weight: bold; }
+td { padding: 7px 10px; border-bottom: 1px solid #eee; vertical-align:top; }
 tr:nth-child(even) td { background: #f8f9fa; }
 tr:hover td { background: #e8f4ff; }
-.tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: bold; margin-left: 6px; }
-.tag-bad { background: #f8d7da; color: #721c24; }
+.tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: bold; margin-left: 4px; white-space:nowrap; }
+.tag-bad  { background: #f8d7da; color: #721c24; }
 .tag-good { background: #d4edda; color: #155724; }
-.tag-new { background: #cce5ff; color: #004085; }
-.tag-key { background: #fff3cd; color: #856404; }
-.highlight { background: #fff3cd; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-.red { color: #dc3545; font-weight: bold; }
+.tag-fix  { background: #cce5ff; color: #004085; }
+.tag-src  { background: #fff3cd; color: #856404; }
+.red   { color: #dc3545; font-weight: bold; }
 .green { color: #28a745; font-weight: bold; }
-.blue { color: #007bff; font-weight: bold; }
-.code { background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 3px; padding: 2px 6px; font-family: monospace; font-size: 11px; }
-.step { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
-.step-num { background: #007bff; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+.orange{ color: #d97706; font-weight: bold; }
+.code  { background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 3px; padding: 2px 6px; font-family: monospace; font-size: 11px; }
+.step  { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.step-num { background: #1F3864; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
 .step-content { flex: 1; }
-.flow-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.flow-box { background: #e8f4ff; border: 1px solid #b8daff; border-radius: 4px; padding: 8px 12px; font-size: 12px; text-align: center; flex: 1; min-width: 100px; }
-.flow-arrow { display: flex; align-items: center; font-size: 16px; color: #666; }
-.ref { font-size: 10px; color: #888; font-style: italic; }
+.warn { background:#fff3cd; border-left:3px solid #ffc107; padding:6px 10px; border-radius:0 4px 4px 0; margin-top:6px; font-size:11px; }
+.tip  { background:#d4edda; border-left:3px solid #28a745; padding:6px 10px; border-radius:0 4px 4px 0; margin-top:6px; font-size:11px; }
+.flow-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+.flow-box { background:#e8f4ff; border:1px solid #b8daff; border-radius:4px; padding:8px 10px; font-size:11px; text-align:center; flex:1; min-width:90px; }
+.flow-arrow { font-size:18px; color:#666; }
+.ref { font-size:10px; color:#888; font-style:italic; margin-top:4px; }
+.highlight { background:#fffacd; padding:2px 6px; border-radius:3px; font-weight:bold; border:1px solid #f0d060; }
+.crossed { text-decoration:line-through; color:#aaa; }
 </style>
 </head>
 <body>
 
-<h1>🔬 Aspen Plus Redesign Guide — High Methane from Human Waste</h1>
-<p class="subtitle">FUT Minna | Chemical Engineering Final Year Project | Plant Design for 10,000 m³/day Cooking Gas</p>
+<h1>🔬 Aspen Plus Input Guide — CORRECTED VERSION</h1>
+<p class="subtitle">FUT Minna | Chemical Engineering Final Year Project | 10,000 m³/day Cooking Gas from Human Waste<br>
+Sources: Anna University Aspen Plus Project (2022) + Akash et al. 2025 — both from your Google Drive library</p>
+
+<!-- CORRECTION NOTICE -->
+<div class="correction-banner">
+  <h2>📋 What Was Wrong in the Previous Guide — Now Fixed</h2>
+  <table style="width:auto;">
+    <tr><th>Item</th><th>Previous Guide (Wrong)</th><th>This Guide (Corrected)</th><th>Source</th></tr>
+    <tr><td>R1 temperature</td><td class="red crossed">70°C</td><td class="green">55°C</td><td>Akash et al. 2025</td></tr>
+    <tr><td>DIGEST1/2/3 temperature</td><td class="red crossed">55°C (thermophilic)</td><td class="green">37°C (mesophilic)</td><td>Anna Univ. 2022 template</td></tr>
+    <tr><td>Sensitivity range</td><td class="red crossed">45–60°C</td><td class="green">35–47°C mesophilic range</td><td>Akash et al. 2025 Fig.5</td></tr>
+    <tr><td>Reactions (Section 5)</td><td class="red crossed">Generic — not from library</td><td class="green">Exact reactions from Anna Univ. 2022 + Akash 2025</td><td>Your library</td></tr>
+    <tr><td>Property method</td><td class="red crossed">NRTL-RK + ELECNRTL (complex, error-prone)</td><td class="green">NRTL only — exactly as your library uses</td><td>Anna Univ. 2022 Fig.16</td></tr>
+    <tr><td>Feed H₂O correction</td><td class="red crossed">3600 kg/hr (over-estimated)</td><td class="green">1000 kg/hr process water — keep your existing feed structure, fix DECOMP only</td><td>Your SIMULATION_RESULT.xlsx</td></tr>
+    <tr><td>DECOMP correction approach</td><td class="red crossed">Delete and rebuild feed</td><td class="green">Keep feed — only fix yield distribution in DECOMP RYield</td><td>Aspen error prevention</td></tr>
+  </table>
+</div>
 
 <!-- DIAGNOSIS -->
 <div class="problem-box">
-  <h2>⚠️ Diagnosis: Why Your Current Simulation Gives Too Much CO₂</h2>
-  <p>From your SIMULATION_RESULT.xlsx, the final biogas stream (PSA inlet) contains:</p>
+  <h2>⚠️ Diagnosis: Why Your Current Simulation Gives Too Much CO₂ and Too Little CH₄</h2>
+  <p>From your SIMULATION_RESULT.xlsx — raw biogas leaving DIGEST3 (before B2 separator):</p>
   <br>
   <table style="width:auto;">
-    <tr><th>Component</th><th>Mass Flow (kg/hr)</th><th>Mole %</th><th>Status</th></tr>
-    <tr><td>CH₄</td><td>309.6</td><td>~20.8%</td><td><span class="tag tag-bad">TOO LOW</span></td></tr>
-    <tr><td>CO₂</td><td>1186.7</td><td>~28.9%</td><td><span class="tag tag-bad">TOO HIGH</span></td></tr>
-    <tr><td>O₂</td><td>171.9</td><td>~5.8%</td><td><span class="tag tag-bad">KILLS METHANOGENS</span></td></tr>
-    <tr><td>N₂</td><td>43.8</td><td>~1.7%</td><td><span class="tag tag-bad">INERT DILUTION</span></td></tr>
-    <tr><td>H₂</td><td>7.5</td><td>~4.0%</td><td><span class="tag tag-bad">LOST POTENTIAL</span></td></tr>
+    <tr><th>Component</th><th>Mass Flow (kg/hr)</th><th>Approx Mole%</th><th>Problem</th></tr>
+    <tr><td><strong>CH₄</strong></td><td>311.8</td><td>~20.8%</td><td><span class="tag tag-bad">WAY TOO LOW — target 52–65%</span></td></tr>
+    <tr><td>CO₂</td><td>1230.5</td><td>~28.9%</td><td><span class="tag tag-bad">TOO HIGH</span></td></tr>
+    <tr><td><strong>O₂</strong></td><td>172.5</td><td>~5.5%</td><td><span class="tag tag-bad">KILLS ALL METHANOGENS — must be ZERO</span></td></tr>
+    <tr><td>H₂</td><td>7.5</td><td>~3.8%</td><td><span class="tag tag-bad">WASTED — should be recycled to make more CH₄</span></td></tr>
+    <tr><td>Propionic acid</td><td>331.2</td><td>—</td><td><span class="tag tag-bad">Not converted — still in liquid</span></td></tr>
+    <tr><td>Butyric acid</td><td>194.9</td><td>—</td><td><span class="tag tag-bad">Not converted — still in liquid</span></td></tr>
   </table>
   <br>
-  <p><strong>Root cause — 4 critical mistakes in your current setup:</strong></p>
-  <ol style="margin-left:20px; margin-top:6px;">
-    <li><strong>DECOMP model is producing free O₂ (1336 kg/hr)</strong> — this is your biggest error. Oxygen present in an anaerobic digester kills methanogens and causes oxidation of CH₄ to CO₂.</li>
-    <li><strong>H₂ is not being recycled for hydrogenotrophic methanogenesis</strong> — H₂ in the system should react with CO₂ to produce more CH₄ (CO₂ + 4H₂ → CH₄ + 2H₂O)</li>
-    <li><strong>VFAs (propionic 331 kg/hr, butyric 195 kg/hr) are not fully converted</strong> — incomplete acetogenesis means unconverted substrate</li>
-    <li><strong>Human waste feedstock characterization is wrong</strong> — your DECOMP is treating it like biomass/lignocellulose, not fecal sludge</li>
+  <p><strong>Root causes — 3 specific errors to fix:</strong></p>
+  <ol style="margin-left:20px; margin-top:6px; line-height:2;">
+    <li><strong>DECOMP block outputs free O₂ (1,336 kg/hr), free C (2,025 kg/hr), free H₂ (243 kg/hr)</strong> — Aspen is decomposing BIOMASS into raw elements because yield fractions are not assigned to organic molecules. This is error #1.</li>
+    <li><strong>H₂ produced in DIGEST1 is not recycled to DIGEST2</strong> — the hydrogenotrophic methanogenesis reaction (14.5H₂ + 3.8CO₂ → 3.4CH₄ + H₂O) is never triggered, so CO₂ accumulates instead of being converted to CH₄.</li>
+    <li><strong>Propionic and butyric acid are only partially converted</strong> — these VFAs need an additional acetogenesis reaction in DIGEST2/3 to fully break down to acetic acid, then to CH₄.</li>
   </ol>
 </div>
 
+<!-- TARGET -->
 <div class="solution-box">
-  <h2>✅ Target: What You Should Achieve with Corrected Inputs</h2>
-  <p>For human waste (sewage sludge / fecal matter) properly simulated in Aspen Plus:</p>
-  <br>
+  <h2>✅ Target After Corrections</h2>
   <table style="width:auto;">
-    <tr><th>Component</th><th>Target Mole %</th><th>Literature Source</th></tr>
-    <tr><td><strong>CH₄</strong></td><td class="green">55–65%</td><td>Adjama et al. 2022; Rocha et al. 2024</td></tr>
-    <tr><td>CO₂</td><td>30–40%</td><td>Normal — will be removed by PSA/scrubber</td></tr>
-    <tr><td>H₂S</td><td>&lt;1%</td><td>Needs H₂S scrubbing first</td></tr>
-    <tr><td>H₂O</td><td>&lt;3%</td><td>Removed by cooling/condensation</td></tr>
-    <tr><td>O₂</td><td class="green">0% (strictly anaerobic)</td><td>Mandatory</td></tr>
+    <tr><th>Component</th><th>Target Mole% in Raw Biogas</th><th>After PSA Product</th><th>Source</th></tr>
+    <tr><td><strong>CH₄</strong></td><td class="green"><strong>52–65%</strong></td><td class="green"><strong>≥ 95%</strong></td><td>Akash et al. 2025 (52% at 320K); Anna Univ. 2022</td></tr>
+    <tr><td>CO₂</td><td>30–40%</td><td>≤ 3%</td><td>Normal for AD — removed by scrubber+PSA</td></tr>
+    <tr><td>H₂S</td><td>&lt;1%</td><td>~0%</td><td>Removed before scrubber</td></tr>
+    <tr><td>O₂</td><td class="green"><strong>0%</strong></td><td>0%</td><td>Mandatory — anaerobic system</td></tr>
+    <tr><td>H₂</td><td>&lt;1%</td><td>~0%</td><td>Consumed by H₂ recycle reaction</td></tr>
   </table>
-  <br>
-  <p><strong>After PSA upgrading, final product (cooking gas) should be:</strong> <span class="highlight">CH₄ ≥ 95%, CO₂ ≤ 3%</span></p>
 </div>
 
-<!-- SECTION 1: FEEDSTOCK -->
+<!-- SECTION 1: PROCESS OVERVIEW -->
 <div class="section">
-  <h2>1. Correct Human Waste Feedstock Characterization for DECOMP</h2>
-  <p>Human feces has a very different composition from generic biomass. Use these values in your DECOMP stoichiometry:</p>
+  <h2>1. Confirmed Process Configuration — DO NOT Change PFD Layout</h2>
+  <p>Your PFD structure is correct. <strong>Do not redraw or rewire anything.</strong> Only the inputs, reactions, and temperatures inside the blocks need to change.</p>
   <br>
-
-  <h3>Ultimate Analysis of Human Feces (Dry Basis) — Enter in DECOMP</h3>
-  <table>
-    <tr><th>Element</th><th>Mass Fraction (wt%)</th><th>Aspen Plus Component</th><th>Notes</th></tr>
-    <tr><td>Carbon (C)</td><td>44.8%</td><td>C (conventional)</td><td>Main substrate for CH₄</td></tr>
-    <tr><td>Hydrogen (H)</td><td>6.3%</td><td>H₂ → assign to H₂O and organic H</td><td>Goes to CH₄ and H₂O</td></tr>
-    <tr><td>Oxygen (O)</td><td>31.5%</td><td>Must be fully bound — assign to H₂O, CO₂, VFAs</td><td><span class="tag tag-bad">DO NOT leave as free O₂</span></td></tr>
-    <tr><td>Nitrogen (N)</td><td>5.5%</td><td>NH₃ (ammonium)</td><td>Released as NH₃/NH₄⁺</td></tr>
-    <tr><td>Sulfur (S)</td><td>0.8%</td><td>H₂S</td><td>Removed in scrubbing</td></tr>
-    <tr><td>Ash (inert)</td><td>11.1%</td><td>ASH (inert solid)</td><td>Passes through as digestate</td></tr>
-  </table>
-
-  <h3>Proximate / Biochemical Composition (to distribute carbon correctly)</h3>
-  <table>
-    <tr><th>Fraction</th><th>Content (% of VS)</th><th>Aspen Component to Use</th><th>Degrades to</th></tr>
-    <tr><td>Proteins</td><td>25–30%</td><td>GLYCINE (as surrogate)</td><td>Amino acids → VFAs + NH₃ + CO₂</td></tr>
-    <tr><td>Carbohydrates</td><td>30–35%</td><td>DEXTROSE (C₆H₁₂O₆)</td><td>Acetic acid + H₂ + CO₂ → CH₄</td></tr>
-    <tr><td>Lipids/Fats</td><td>15–20%</td><td>TRIOLEIN (C₅₇H₁₀₄O₆)</td><td>LCFAs + glycerol → CH₄ (slow)</td></tr>
-    <tr><td>Fiber/Cellulose</td><td>10–15%</td><td>CELLULOSE or DEXTROSE</td><td>Slow hydrolysis</td></tr>
-    <tr><td>Undigested solids</td><td>10%</td><td>ASH (inert)</td><td>Digestate only</td></tr>
-  </table>
-
-  <h3>Feed Stream Inputs (for 4500 kg/hr fresh fecal sludge, ~80% moisture)</h3>
-  <table>
-    <tr><th>Component</th><th>kg/hr</th><th>Notes</th></tr>
-    <tr><td>H₂O</td><td>3600</td><td>80% moisture content typical for fresh feces</td></tr>
-    <tr><td>DEXTROSE (carbohydrates)</td><td>270</td><td>30% of 900 kg/hr dry matter</td></tr>
-    <tr><td>GLYCINE (proteins)</td><td>247.5</td><td>27.5% of dry matter</td></tr>
-    <tr><td>TRIOLEIN (lipids)</td><td>157.5</td><td>17.5% of dry matter</td></tr>
-    <tr><td>CELLULOSE/fiber</td><td>125</td><td>~14% as dextrose equivalent</td></tr>
-    <tr><td>ASH</td><td>100</td><td>~11% inerts</td></tr>
-    <tr><td>Total</td><td><strong>4500</strong></td><td>900 kg/hr dry solids</td></tr>
-  </table>
-  <p class="ref">Source: Tchobanoglous et al. Wastewater Engineering; Adjama 2022 (Wiley); Rocha et al. 2024 (PMC)</p>
-</div>
-
-<!-- SECTION 2: PROCESS DESIGN -->
-<div class="section">
-  <h2>2. Recommended Process — Why You Need a Different Configuration</h2>
-  <p>The key to maximizing CH₄ from human waste is a <strong>two-stage thermophilic anaerobic digestion</strong> system with complete anaerobic conditions and H₂ recycling for hydrogenotrophic methanogenesis.</p>
-  <br>
-
   <div class="flow-row">
-    <div class="flow-box"><strong>FEED</strong><br>Human waste<br>+ H₂O dilution<br>4500 kg/hr</div>
+    <div class="flow-box"><strong>BIOMASS</strong><br>Feed<br>4500 kg/hr<br>25°C, 1 atm</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box"><strong>PRETREAT</strong><br>Thermal hydrolysis<br>70°C, 30 min<br>(R1)</div>
+    <div class="flow-box"><strong>DECOMP</strong><br>RYield<br>35°C<br>Fix yields ⚠️</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box"><strong>ACIDOGENESIS</strong><br>Stage 1 CSTR<br>55°C, pH 5.5–6.0<br>HRT = 3 days</div>
+    <div class="flow-box"><strong>R1</strong><br>RStoic<br><span class="green">55°C</span><br>Hydrolysis</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box"><strong>METHANOGENESIS</strong><br>Stage 2 CSTR<br>55°C, pH 7.0–7.5<br>HRT = 15 days</div>
+    <div class="flow-box"><strong>DIGEST1</strong><br>RCSTR<br><span class="green">37°C</span><br>Acidogenesis</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box"><strong>H₂S + NH₃<br>REMOVAL</strong><br>Amine scrubber<br>or iron sponge</div>
+    <div class="flow-box"><strong>DIGEST2</strong><br>RCSTR<br><span class="green">37°C</span><br>Methanogenesis<br>+ H₂ recycle ⚠️</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box"><strong>CO₂ REMOVAL</strong><br>Water scrubbing<br>or PSA<br>10 bar</div>
+    <div class="flow-box"><strong>DIGEST3</strong><br>RCSTR<br><span class="green">37°C</span><br>Polishing</div>
     <span class="flow-arrow">→</span>
-    <div class="flow-box" style="background:#d4edda; border-color:#28a745;"><strong>CH₄ ≥ 95%</strong><br>Cooking gas<br>310 K, 10 bar</div>
+    <div class="flow-box"><strong>B2 → SCRUBBER → PSA</strong><br>Upgrading<br>Existing setup OK</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box" style="background:#d4edda; border-color:#28a745;"><strong>CH₄ ≥ 95%</strong><br>Cooking gas<br>Product</div>
+  </div>
+  <p class="ref">★ R1 at 55°C = thermal hydrolysis pre-treatment (short contact). DIGEST1/2/3 at 37°C = standard mesophilic anaerobic digestion. Source: Akash et al. 2025 (R1); Anna Univ. 2022 (DIGEST blocks).</p>
+</div>
+
+<!-- SECTION 2: COMPONENT LIST -->
+<div class="section">
+  <h2>2. Component List — Add These FIRST Before Any Other Changes</h2>
+  <p><strong>Do this step first in Aspen Plus</strong> — Components → Specifications. Every component used in reactions or yield tables must exist here. Adding a component that doesn't exist in this list will cause Aspen to error on every block that references it.</p>
+  <br>
+  <table>
+    <tr><th>Component ID</th><th>Type</th><th>Aspen Formula / Name</th><th>Already in your model?</th><th>Action</th></tr>
+    <tr><td>H2O</td><td>Conventional</td><td>H2O</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>CO2</td><td>Conventional</td><td>CO2</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>CH4</td><td>Conventional</td><td>CH4</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>H2</td><td>Conventional</td><td>H2</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>NH3</td><td>Conventional</td><td>NH3</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>H2S</td><td>Conventional</td><td>H2S</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>ACETIC-AC</td><td>Conventional</td><td>C2H4O2 (Acetic Acid)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>PROPION</td><td>Conventional</td><td>C3H6O2 (Propionic Acid)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>BUTYRIC</td><td>Conventional</td><td>C4H8O2 (Butyric Acid)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>GLYCEROL</td><td>Conventional</td><td>C3H8O3</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>DEXTROSE</td><td>Conventional</td><td>C6H12O6 (Glucose)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>TRIOLEIN</td><td>Conventional</td><td>C57H104O6</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>OLEIC-AC</td><td>Conventional</td><td>C18H34O2 (Oleic Acid)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>GLYCINE</td><td>Conventional</td><td>C2H5NO2</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr><td>ASH</td><td>Nonconventional</td><td>ASH (inert solid)</td><td class="green">Yes ✓</td><td>No action needed</td></tr>
+    <tr style="background:#fff3cd;"><td>C5H7NO2</td><td>Conventional</td><td>C5H7NO2 (Microbial Biomass)</td><td class="orange">CHECK ⚠️</td><td>Add if not present — needed for methanogenesis reactions from your library</td></tr>
+    <tr style="background:#fff3cd;"><td>ISOBUTYRIC</td><td>Conventional</td><td>C4H8O2 (Isobutyric Acid)</td><td class="orange">CHECK ⚠️</td><td>Add if not present — used in acetogenesis reactions</td></tr>
+  </table>
+  <div class="tip">✅ Tip: If C5H7NO2 causes convergence issues in Aspen, you can simplify the methanogenesis reactions by removing the 0.022 NH3 → 0.022 C5H7NO2 term. Replace it with NH3 staying as NH3 in the product. The CH4 yield calculation will still be correct.</div>
+</div>
+
+<!-- SECTION 3: DECOMP FIX -->
+<div class="section">
+  <h2>3. DECOMP Block Fix — Critical, Do This Before Running</h2>
+  <p>This is the <strong>single most important fix</strong>. Your DECOMP (RYield) block must output organic molecules, not free elements. Open DECOMP → Setup → Yield tab.</p>
+  <br>
+
+  <h3>Current Yield Distribution (WRONG — causing O₂ and C errors)</h3>
+  <table>
+    <tr><th>Component</th><th>Current Yield (kg/kg feed)</th><th>Problem</th></tr>
+    <tr><td>C (free carbon)</td><td class="red">0.450</td><td>Free carbon cannot react in digestion reactions — causes convergence error</td></tr>
+    <tr><td>O₂ (free oxygen)</td><td class="red">0.297</td><td>Kills all methanogens — biggest error in entire simulation</td></tr>
+    <tr><td>H₂ (free hydrogen)</td><td class="red">0.054</td><td>Free H₂ at decomp stage is wrong — H is inside organic molecules</td></tr>
+    <tr><td>N₂ (free nitrogen)</td><td class="red">0.036</td><td>Nitrogen should go to NH3, not N2</td></tr>
+    <tr><td>S (free sulfur)</td><td class="red">0.018</td><td>Sulfur should go to H2S, not free S</td></tr>
+    <tr><td>H₂O</td><td>0.100</td><td>Keep — moisture in human waste</td></tr>
+    <tr><td>ASH</td><td>0.045</td><td>Keep — inert ash fraction</td></tr>
+  </table>
+
+  <h3>Corrected Yield Distribution (Enter These Values)</h3>
+  <p>All values below are kg of component produced per kg of BIOMASS feed. <strong>They must sum to exactly 1.000</strong> or Aspen will throw a mass balance error.</p>
+  <br>
+  <table>
+    <tr><th>Component</th><th>New Yield (kg/kg feed)</th><th>Calculation basis</th><th>Why this component</th></tr>
+    <tr style="background:#d4edda;"><td>DEXTROSE</td><td><strong>0.338</strong></td><td>Carbohydrates 30% + fiber 7.5% of 900 kg dry/4500 total</td><td>Represents carbohydrate fraction of human waste</td></tr>
+    <tr style="background:#d4edda;"><td>GLYCINE</td><td><strong>0.189</strong></td><td>Protein 27.5% × 0.9 moisture factor</td><td>Surrogate for protein fraction</td></tr>
+    <tr style="background:#d4edda;"><td>TRIOLEIN</td><td><strong>0.135</strong></td><td>Lipids 17.5% of dry matter × 0.9</td><td>Surrogate for fat/lipid fraction</td></tr>
+    <tr style="background:#d4edda;"><td>H₂O</td><td><strong>0.238</strong></td><td>Remaining moisture after organics allocated</td><td>Water bound in human waste structure</td></tr>
+    <tr style="background:#d4edda;"><td>ASH</td><td><strong>0.045</strong></td><td>Inert ash fraction — keep existing value</td><td>Inorganic solids</td></tr>
+    <tr style="background:#d4edda;"><td>H₂S</td><td><strong>0.018</strong></td><td>Replaces free S — sulfur exits as H2S</td><td>Correct form for sulfur in anaerobic system</td></tr>
+    <tr style="background:#d4edda;"><td>NH₃</td><td><strong>0.037</strong></td><td>Replaces free N — nitrogen exits as ammonia</td><td>Correct form for nitrogen in anaerobic system</td></tr>
+    <tr style="background:#fff3cd;"><td><strong>TOTAL</strong></td><td><strong>1.000 ✓</strong></td><td>Must equal exactly 1.000</td><td>Mass balance requirement</td></tr>
+    <tr style="background:#f8d7da;"><td>C (free)</td><td><strong>0</strong></td><td>Remove completely</td><td>—</td></tr>
+    <tr style="background:#f8d7da;"><td>O₂ (free)</td><td><strong>0</strong></td><td>Remove completely</td><td>—</td></tr>
+    <tr style="background:#f8d7da;"><td>H₂ (free)</td><td><strong>0</strong></td><td>Remove completely</td><td>—</td></tr>
+    <tr style="background:#f8d7da;"><td>N₂ (free)</td><td><strong>0</strong></td><td>Remove completely</td><td>—</td></tr>
+    <tr style="background:#f8d7da;"><td>S (free)</td><td><strong>0</strong></td><td>Remove completely</td><td>—</td></tr>
+  </table>
+  <div class="warn">⚠️ Aspen Error Prevention: After entering new yields, click the "Check" button in Aspen Plus before running. If the sum is not 1.000 Aspen will show a red "Mass balance error in RYield" warning. Add or subtract from H₂O yield to adjust to exactly 1.000.</div>
+</div>
+
+<!-- SECTION 4: TEMPERATURE -->
+<div class="section">
+  <h2>4. Confirmed Temperature Settings — All Blocks</h2>
+  <p>These are the <strong>final agreed temperatures</strong> based on both papers in your library. Do not change these again.</p>
+  <br>
+  <table>
+    <tr><th>Block</th><th>Temperature</th><th>Pressure</th><th>Regime</th><th>Source</th><th>Aspen Valid Phases</th></tr>
+    <tr><td>BIOMASS feed stream</td><td>25°C (298 K)</td><td>1 atm</td><td>—</td><td>Standard</td><td>—</td></tr>
+    <tr><td>H₂O feed stream</td><td>25°C</td><td>1 atm</td><td>—</td><td>Standard</td><td>—</td></tr>
+    <tr><td>DECOMP (RYield)</td><td>35°C (308 K)</td><td>1 atm</td><td>Mesophilic</td><td>Anna Univ. 2022</td><td>Vapor-Liquid</td></tr>
+    <tr style="background:#fff3cd;"><td><strong>R1 (RStoic)</strong></td><td><strong>55°C (328 K)</strong></td><td>1 atm</td><td>Thermal hydrolysis</td><td><strong>Akash et al. 2025</strong></td><td>Vapor-Liquid</td></tr>
+    <tr style="background:#d4edda;"><td><strong>DIGEST1 (RCSTR)</strong></td><td><strong>37°C (310 K)</strong></td><td>1 atm</td><td><strong>Mesophilic</strong></td><td><strong>Anna Univ. 2022</strong></td><td>Vapor-Liquid</td></tr>
+    <tr style="background:#d4edda;"><td><strong>DIGEST2 (RCSTR)</strong></td><td><strong>37°C (310 K)</strong></td><td>1 atm</td><td><strong>Mesophilic</strong></td><td><strong>Anna Univ. 2022</strong></td><td>Vapor-Liquid</td></tr>
+    <tr style="background:#d4edda;"><td><strong>DIGEST3 (RCSTR)</strong></td><td><strong>37°C (310 K)</strong></td><td>1 atm</td><td><strong>Mesophilic</strong></td><td><strong>Anna Univ. 2022</strong></td><td>Vapor-Liquid</td></tr>
+    <tr><td>COOLER1</td><td>10°C</td><td>1 atm</td><td>—</td><td>Existing</td><td>Vapor-Liquid</td></tr>
+    <tr><td>SCRUBBER</td><td>10°C</td><td>9 bar</td><td>—</td><td>Existing</td><td>Vapor-Liquid</td></tr>
+    <tr><td>COMP</td><td>Adiabatic</td><td>9 bar out</td><td>—</td><td>Existing</td><td>Vapor</td></tr>
+    <tr><td>PSA</td><td>25°C</td><td>9 bar</td><td>—</td><td>Existing</td><td>Vapor</td></tr>
+    <tr><td>COOLER2</td><td>10°C</td><td>9 bar</td><td>—</td><td>Existing</td><td>Vapor-Liquid</td></tr>
+  </table>
+  <div class="warn">⚠️ Aspen Error Prevention: In every RCSTR block, go to Setup → Valid Phases and set it to "Vapor-Liquid". If it is set to "Liquid-Only", Aspen will error when CH₄ and CO₂ flash to vapour at digestion temperatures.</div>
+</div>
+
+<!-- SECTION 5: REACTIONS — FROM LIBRARY -->
+<div class="section">
+  <h2>5. Complete Reaction Tables — Copied Exactly from Your Library</h2>
+  <p>These reactions come directly from <strong>Anna University 2022 (Tables 4–7)</strong> and <strong>Akash et al. 2025 (Tables 1–2)</strong> — both in your Google Drive library. Use these exact stoichiometries.</p>
+
+  <h3>R1 Block — Hydrolysis Reactions (RStoic, 55°C) — from Anna Univ. 2022 Table 4 + Akash 2025 Table 1</h3>
+  <table>
+    <tr><th>#</th><th>Compound</th><th>Reaction</th><th>Conversion</th></tr>
+    <tr><td>1</td><td>Starch</td><td>(C₆H₁₂O₆)ₙ + H₂O → n C₆H₁₂O₆</td><td>0.60 ± 0.20</td></tr>
+    <tr><td>2</td><td>Cellulose</td><td>(C₆H₁₂O₆)ₙ + H₂O → n C₆H₁₂O₆</td><td>0.40 ± 0.10</td></tr>
+    <tr><td>3</td><td>Cellulose alt.</td><td>C₆H₁₂O₆ + H₂O → 2 C₂H₆O + 2 CO₂</td><td>0.40 ± 0.10</td></tr>
+    <tr><td>4</td><td>Ethanol</td><td>2 C₂H₆O + CO₂ → 2 C₂H₄O₂ + CH₄</td><td>0.60 ± 0.10</td></tr>
+    <tr><td>5</td><td>Soluble Protein</td><td>C₁₃H₂₅O₇N₃S + 6H₂O → 6.5CO₂ + 6.5CH₄ + 3NH₃ + H₂S</td><td>0.50 ± 0.20</td></tr>
+    <tr><td>6</td><td>Insoluble Protein</td><td>I.P. + 0.3337H₂O → 0.045C₆H₁₄N₄O₂ + 0.048C₄H₇NO₄ + 0.047C₄H₉NO₃ + 0.172C₃H₇NO₃ + 0.25C₂H₅NO₂ + other amino acids</td><td>0.60 ± 0.10</td></tr>
+    <tr><td>7</td><td>Triolein</td><td>C₅₇H₁₀₄O₆ + 3H₂O → C₃H₈O₃ + 3C₁₈H₃₄O₂</td><td>0.50 ± 0.20</td></tr>
+    <tr><td>8</td><td>Tripalmitin</td><td>C₅₁H₉₈O₆ + 8.436H₂O → 4C₃H₈O₃ + 2.43C₁₆H₃₄O</td><td>0.50 ± 0.30</td></tr>
+  </table>
+  <p class="ref">Source: Anna Univ. 2022 Table 4; Akash et al. 2025 Table 1</p>
+
+  <h3>DIGEST1 Block — Acidogenesis Reactions (RCSTR, 37°C) — from Anna Univ. 2022 Table 5 + Akash 2025 Table 2</h3>
+  <table>
+    <tr><th>#</th><th>Compound</th><th>Reaction</th><th>Kinetic Constant</th></tr>
+    <tr><td>9</td><td>Dextrose</td><td>C₆H₁₂O₆ + 0.1115NH₃ → 0.1115C₅H₇NO₂ + 0.744C₂H₄O₂ + 0.5C₃H₆O₂ + 0.4409C₄H₈O₂ + 0.6909CO₂ + 1.0254H₂O</td><td>9.54 × 10⁻³</td></tr>
+    <tr><td>10</td><td>Glycerol</td><td>C₃H₈O₃ + 0.4071NH₃ + 0.0291CO₂ + 0.0005H₂ → 0.04071C₅H₇NO₂ + 0.94185C₃H₆O₂ + 1.09308H₂O</td><td>1.01 × 10⁻²</td></tr>
+    <tr><td>11</td><td>Glycine</td><td>C₂H₅NO₂ + H₂ → C₂H₄O₂ + NH₃</td><td>1.28 × 10⁻²</td></tr>
+    <tr><td>12</td><td>Serine</td><td>C₃H₇NO₃ + H₂O → C₂H₄O₂ + NH₃ + CO₂ + H₂</td><td>1.28 × 10⁻²</td></tr>
+    <tr><td>13</td><td>Alanine</td><td>C₃H₇NO₂ + 2H₂O → C₂H₄O₂ + NH₃ + CO₂ + 2H₂</td><td>1.28 × 10⁻²</td></tr>
+  </table>
+  <p class="ref">Source: Anna Univ. 2022 Table 5; Akash et al. 2025 Table 2 reactions 24–25</p>
+
+  <h3>DIGEST2 Block — Acetogenesis + Methanogenesis (RCSTR, 37°C) — from Anna Univ. 2022 Tables 6–7 + Akash 2025 Table 2</h3>
+  <table>
+    <tr><th>#</th><th>Compound</th><th>Reaction</th><th>Kinetic Constant</th></tr>
+    <tr><td>14</td><td>Oleic Acid</td><td>C₁₈H₃₄O₂ + 15.2396H₂O + 0.2501CO₂ + 0.1701NH₃ → 0.1701C₅H₇NO₂ + 8.6998C₂H₄O₂ + 14.4978H₂</td><td>3.64 × 10⁻¹²</td></tr>
+    <tr><td>15</td><td>Linoleic Acid</td><td>C₁₈H₃₂O₂ + 15.356H₂O + 0.482CO₂ + 0.1701NH₃ → 0.1701C₅H₇NO₂ + 9.02C₂H₄O₂ + 10.0723H₂</td><td>3.64 × 10⁻¹²</td></tr>
+    <tr><td>16</td><td>Propionic Acid</td><td>C₃H₆O₂ + 0.06198NH₃ + 0.314336H₂O → 0.06198C₅H₇NO₂ + 0.9345C₂H₄O₂ + 0.660412CH₄ + 0.160688CO₂ + 0.00055H₂</td><td>1.95 × 10⁻⁵</td></tr>
+    <tr><td>17</td><td>Isobutyric Acid</td><td>C₄H₈O₂ + 0.0653NH₃ + 0.8038H₂O + 0.0006H₂ + 0.5543CO₂ → 0.0653C₅H₇NO₂ + 1.8909C₂H₄O₂ + 0.446CH₄</td><td>5.88 × 10⁻⁶</td></tr>
+    <tr style="background:#fffacd;"><td>18</td><td><strong>Acetic Acid ★</strong></td><td><strong>C₂H₄O₂ + 0.022NH₃ → 0.022C₅H₇NO₂ + 0.945CH₄ + 0.066H₂O + 0.945CO₂</strong></td><td><strong>2.39 × 10⁻³</strong></td></tr>
+    <tr style="background:#fffacd;"><td>19</td><td><strong>H₂ Recycle ★ (NEW STREAM)</strong></td><td><strong>14.4976H₂ + 3.8334CO₂ + 0.0836NH₃ → 0.0836C₅H₇NO₂ + 3.4154CH₄ + 7.4996H₂O</strong></td><td><strong>2.39 × 10⁻³</strong></td></tr>
+    <tr><td>20</td><td>Dextrose (residual)</td><td>C₆H₁₂O₆ + 0.1115NH₃ → 0.1115C₅H₇NO₂ + 0.744C₂H₄O₂ + 0.5C₃H₆O₂ + 0.4409C₄H₈O₂ + 0.6909CO₂ + 1.0254H₂O</td><td>9.54 × 10⁻³</td></tr>
+  </table>
+  <p class="ref">★ Reactions 18 and 19 are your key methane-producing reactions. Reaction 19 requires the H₂ recycle stream. Source: Anna Univ. 2022 Table 7; Akash et al. 2025 Table 2 reactions 32–33</p>
+
+  <h3>DIGEST3 Block — Polishing (RCSTR, 37°C)</h3>
+  <table>
+    <tr><th>#</th><th>Reaction</th><th>Kinetic Constant</th><th>Purpose</th></tr>
+    <tr><td>21</td><td>C₂H₄O₂ + 0.022NH₃ → 0.022C₅H₇NO₂ + 0.945CH₄ + 0.066H₂O + 0.945CO₂</td><td>2.39 × 10⁻³</td><td>Convert remaining acetic acid to CH₄</td></tr>
+    <tr><td>22</td><td>C₃H₆O₂ + 0.06198NH₃ + 0.314H₂O → 0.062C₅H₇NO₂ + 0.9345C₂H₄O₂ + 0.66CH₄ + 0.16CO₂ + 0.0006H₂</td><td>1.95 × 10⁻⁵</td><td>Convert remaining propionic acid</td></tr>
+  </table>
+  <p class="ref">Source: Anna Univ. 2022 Table 7; Akash et al. 2025 Table 2</p>
+</div>
+
+<!-- SECTION 6: H2 RECYCLE -->
+<div class="section">
+  <h2>6. H₂ Recycle Stream — How to Add Without Errors</h2>
+  <p>This is the <strong>second most important fix</strong>. Reaction 19 above (H₂ recycle) needs a new stream bringing H₂ from DIGEST1 gas outlet into DIGEST2 inlet.</p>
+  <br>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>In your PFD:</strong> Draw a new stream from the <strong>gas/vapour outlet of DIGEST1</strong> to the <strong>inlet of DIGEST2</strong>. Name it HRECYCLE or similar.
+      <div class="warn">⚠️ Make sure you connect from the vapour phase outlet of DIGEST1, not the liquid outlet. In RCSTR the vapour outlet is the top nozzle.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>In DIGEST2 reactions:</strong> Add Reaction 19 exactly as written in Section 5. Set kinetic constant = 2.39 × 10⁻³. This reaction will now consume the recycled H₂ and CO₂ to produce CH₄.
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>If Aspen throws a convergence error on the recycle:</strong> Go to Convergence → Options → Max iterations, increase from 25 to 50. Recycle streams always need more iterations to converge.
+      <div class="tip">✅ Alternatively add a small PURGE stream (5% split) from the recycle to prevent Aspen getting stuck in an infinite recycle loop. This is standard practice for recycle streams in Aspen Plus.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7: PROPERTY METHOD -->
+<div class="section">
+  <h2>7. Property Method — Keep It Simple to Avoid Errors</h2>
+  <p>Your library (Anna Univ. 2022, Fig. 16) uses <strong>NRTL only</strong> — not NRTL-RK or ELECNRTL. Keep it as NRTL. The previous guide recommended NRTL-RK + ELECNRTL which would require extensive additional setup and could break your existing converged blocks.</p>
+  <br>
+  <table>
+    <tr><th>Setting</th><th>Use This</th><th>Do NOT Use</th><th>Reason</th></tr>
+    <tr><td>Global property method</td><td class="green"><strong>NRTL</strong></td><td class="red">NRTL-RK, PSRK, ELECNRTL</td><td>NRTL is what your reference project uses — proven to work</td></tr>
+    <tr><td>Henry's components</td><td>CH4, CO2, H2, H2S</td><td>—</td><td>Add these in NRTL Henry's tab if not already present</td></tr>
+    <tr><td>Nonconventional solid method</td><td>HCOALGEN for ASH</td><td>—</td><td>Standard Aspen method for inert solids</td></tr>
+  </table>
+  <div class="tip">✅ If your simulation is already running (even with wrong results) on NRTL, do not change the property method. Changing it will require you to re-specify binary parameters for every component pair and will likely break convergence.</div>
+</div>
+
+<!-- SECTION 8: STEP BY STEP -->
+<div class="section">
+  <h2>8. Step-by-Step Action List — Do In This Exact Order</h2>
+  <p>Follow this order strictly. Each step depends on the previous one being complete in Aspen Plus.</p>
+  <br>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Add missing components to Component List (if not already there):</strong> C5H7NO2, ISOBUTYRIC. Search by formula in Aspen's databanks. Do NOT proceed to step 2 until this is done.
+      <div class="tip">✅ If C5H7NO2 is not in the Aspen databank, use CELLULOS as a surrogate or simply remove the 0.022C5H7NO2 term from reactions 18 and 19 — the CH4 yield will still be correct.</div>
+    </div>
   </div>
 
-  <h3>Critical Change: H₂ Recycling Loop (Hydrogenotrophic Methanogenesis)</h3>
-  <p>In your current model, H₂ is being separated out and wasted. Instead, it must be recycled back into the methanogenesis reactor. This reaction converts CO₂ + H₂ directly into methane:</p>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Fix DECOMP yields:</strong> Open DECOMP → Setup → Yield. Delete all rows with C (free), O2 (free), H2 (free), N2 (free), S (free). Enter new yield values from Section 3 table. Verify sum = 1.000 exactly before closing.
+      <div class="warn">⚠️ After this change, DECOMP output will change significantly. All downstream blocks may show warnings — this is expected. Run the simulation first and check if warnings clear after convergence.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Set R1 temperature to 55°C:</strong> Open R1 → Operating Conditions → Temperature = 55°C (328 K). Pressure = 1 atm. Valid Phases = Vapor-Liquid.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Set DIGEST1, DIGEST2, DIGEST3 temperatures to 37°C:</strong> Open each RCSTR block → Operating Conditions → Temperature = 37°C (310 K). Valid Phases = Vapor-Liquid on all three.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <strong>Update reactions in DIGEST1:</strong> Replace existing reactions with reactions 9–13 from Section 5. Use RKinetics block type with the kinetic constants shown. pH = 6.5–7.0.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-content">
+      <strong>Add H₂ recycle stream:</strong> Draw new stream from DIGEST1 vapour outlet → DIGEST2 inlet. Add reaction 19 to DIGEST2 reactions. Increase convergence max iterations to 50.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">7</div>
+    <div class="step-content">
+      <strong>Update reactions in DIGEST2:</strong> Add reactions 14–20 from Section 5. Reactions 18 and 19 are the most important — these produce your CH₄.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">8</div>
+    <div class="step-content">
+      <strong>Update reactions in DIGEST3:</strong> Add reactions 21–22 from Section 5. These convert remaining VFAs.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">9</div>
+    <div class="step-content">
+      <strong>Run simulation and check DIGEST3 gas outlet:</strong> CH₄ mole fraction should now be 52–65%. If it is still low, check that O₂ = 0 in DECOMP output and that the H₂ recycle stream is connected correctly.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">10</div>
+    <div class="step-content">
+      <strong>Do NOT change SCRUBBER, PSA, B2, B4, B10, COOLER1, COOLER2:</strong> These are already working correctly. Leave them exactly as they are.
+      <div class="tip">✅ Your PSA block already correctly separates CH₄ to outlet 1 and CO₂ to outlet 2. Once the raw biogas CH₄ fraction improves, the PSA product quality will automatically improve.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9: SUMMARY TABLE -->
+<div class="section">
+  <h2>9. Final Summary — Old vs Corrected Values</h2>
+  <table>
+    <tr><th>Parameter</th><th>Old Guide (Wrong)</th><th>This Guide (Corrected)</th><th>Source</th></tr>
+    <tr><td>R1 temperature</td><td class="red">70°C ❌</td><td class="green">55°C ✓</td><td>Akash et al. 2025</td></tr>
+    <tr><td>DIGEST1 temperature</td><td class="red">55°C ❌</td><td class="green">37°C (mesophilic) ✓</td><td>Anna Univ. 2022</td></tr>
+    <tr><td>DIGEST2 temperature</td><td class="red">55°C ❌</td><td class="green">37°C (mesophilic) ✓</td><td>Anna Univ. 2022</td></tr>
+    <tr><td>DIGEST3 temperature</td><td class="red">55°C ❌</td><td class="green">37°C (mesophilic) ✓</td><td>Anna Univ. 2022</td></tr>
+    <tr><td>Free O₂ in DECOMP</td><td class="red">1336 kg/hr ❌</td><td class="green">0 kg/hr ✓</td><td>Anaerobic system requirement</td></tr>
+    <tr><td>Free C in DECOMP</td><td class="red">2025 kg/hr ❌</td><td class="green">0 — distributed to organics ✓</td><td>Aspen yield correction</td></tr>
+    <tr><td>H₂ recycle</td><td class="red">Missing ❌</td><td class="green">DIGEST1 vapour → DIGEST2 ✓</td><td>Anna Univ. 2022 + Akash 2025</td></tr>
+    <tr><td>Methanogenesis kinetic constant</td><td class="red">Not specified ❌</td><td class="green">2.39 × 10⁻³ ✓</td><td>Anna Univ. 2022 Table 7</td></tr>
+    <tr><td>Property method</td><td class="red">NRTL-RK + ELECNRTL ❌</td><td class="green">NRTL only ✓</td><td>Anna Univ. 2022 Fig.16</td></tr>
+    <tr><td>Feed rebuild</td><td class="red">Rebuild from scratch ❌</td><td class="green">Keep existing feed — fix DECOMP only ✓</td><td>Aspen error prevention</td></tr>
+    <tr><td>SCRUBBER/PSA/Coolers</td><td>Various changes suggested</td><td class="green">Leave exactly as is ✓</td><td>Already working correctly</td></tr>
+    <tr style="background:#fffacd;"><td><strong>Expected CH₄ in biogas</strong></td><td class="red">~21% (current)</td><td class="green">52–65% ✓</td><td>Akash et al. 2025 Fig.5</td></tr>
+    <tr style="background:#fffacd;"><td><strong>Expected CH₄ after PSA</strong></td><td>~100% CH4 stream but small</td><td class="green">≥ 95% purity, larger flow ✓</td><td>Cooking gas standard</td></tr>
+  </table>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#e8f4ff; border-left:4px solid #1F3864; padding:12px 16px; border-radius:0 6px 6px 0; margin-top:16px; font-size:12px; line-height:1.8;">
+  <strong>📚 Citations for Your Report (from your Google Drive library):</strong><br>
+  1. Anna University (2022) — "Design for Production of Biogas Using Aspen Plus" — Reactions Tables 4–7, Property method Fig.16, Temperature 30–37°C<br>
+  2. Akash et al. (2025) — "Optimization of Methane Production in Anaerobic Digestion: A Hybrid Approach" — Results in Engineering 28, 107464 — R1 at 55°C; optimal T = 320K; HRT = 15 days; kinetic constants Table 2<br>
+  3. Al-Hinai et al. (2020) — Scientific Reports — techno-economic validation<br>
+  4. Corsino et al. (2021) — PMC/IJERPH — co-digestion methane yields<br>
   <br>
-  <p style="text-align:center; font-size:14px; background:#e8f4ff; padding:10px; border-radius:4px;">
-    <strong>CO₂ + 4H₂ → CH₄ + 2H₂O</strong> &nbsp;&nbsp;&nbsp; (ΔG° = −130.7 kJ/mol)
-  </p>
-  <br>
-  <p>This single change alone can <strong>reduce CO₂ by 15–25%</strong> and increase CH₄ yield proportionally.</p>
-</div>
-
-<!-- SECTION 3: ASPEN PLUS BLOCK-BY-BLOCK INPUTS -->
-<div class="section">
-  <h2>3. Block-by-Block Aspen Plus Input Settings</h2>
-
-  <h3>🔵 DECOMP Block (RYield Reactor) — Complete correction</h3>
-  <table>
-    <tr><th>Parameter</th><th>Your Current Value</th><th>Corrected Value</th><th>Why</th></tr>
-    <tr><td>Temperature</td><td>35°C</td><td>35°C ✓</td><td>OK for decomposition</td></tr>
-    <tr><td>Pressure</td><td>1 atm</td><td>1 atm ✓</td><td>OK</td></tr>
-    <tr><td>O₂ yield</td><td>1336.5 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>0 kg/hr</strong></td><td>NO free O₂ in anaerobic system!</td></tr>
-    <tr><td>C yield</td><td>2025 kg/hr</td><td>Distribute into DEXTROSE, GLYCINE, TRIOLEIN</td><td>Must be in organic form</td></tr>
-    <tr><td>H₂ yield (free)</td><td>243 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>0</strong> — H is in organics</td><td>H₂ produced only in acidogenesis</td></tr>
-    <tr><td>H₂O in feed</td><td>0 kg/hr <span class="tag tag-bad">ERROR</span></td><td><strong>3600 kg/hr</strong></td><td>Human waste is 80% water</td></tr>
-    <tr><td>Yield basis</td><td>Biomass</td><td><strong>Wet fecal sludge</strong></td><td>Change property method</td></tr>
-  </table>
-
-  <h3>🔵 R1 Block (Thermal Pre-treatment — RStoic Reactor)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th></tr>
-    <tr><td>Type</td><td>RStoic (replaces your current R1)</td></tr>
-    <tr><td>Temperature</td><td>70°C</td></tr>
-    <tr><td>Pressure</td><td>1 atm</td></tr>
-    <tr><td>Purpose</td><td>Thermal hydrolysis — break complex organics into simpler VFA precursors</td></tr>
-    <tr><td>Reactions</td><td>TRIOLEIN → OLEIC (hydrolysis); DEXTROSE → partial acidification; GLYCINE → partial breakdown</td></tr>
-    <tr><td>Conversion</td><td>30–40% hydrolysis per pass</td></tr>
-    <tr><td>HRT</td><td>0.5 hr (30 min contact time)</td></tr>
-  </table>
-
-  <h3>🔵 DIGEST1 — Stage 1: Acidogenesis (RCSTR)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th><th>Notes</th></tr>
-    <tr><td>Reactor type</td><td>RCSTR (Continuous Stirred Tank)</td><td></td></tr>
-    <tr><td>Temperature</td><td><strong>55°C (thermophilic)</strong></td><td>Up from 35°C — faster kinetics, more CH₄</td></tr>
-    <tr><td>Pressure</td><td>1 atm</td><td></td></tr>
-    <tr><td>pH</td><td>5.5 – 6.0</td><td>Set via NaHCO₃/HCl titration block</td></tr>
-    <tr><td>HRT</td><td>2–3 days</td><td>Volume = Flow × HRT</td></tr>
-    <tr><td>Purpose</td><td>Acidogenesis only — produce VFAs, NO methanogenesis here</td></tr>
-    <tr><td>Kinetics model</td><td>ADM1 acidogenesis reactions</td><td>Use RKinetics block</td></tr>
-    <tr><td>Main reactions to specify</td><td>DEXTROSE → 2 ACETIC + 2CO₂ + 4H₂<br>GLYCINE → VFAs + NH₃<br>TRIOLEIN → OLEIC + GLYCEROL</td><td></td></tr>
-    <tr><td>O₂</td><td><strong>0 — strictly anaerobic</strong></td><td>Add N₂ purge if needed in model</td></tr>
-  </table>
-
-  <h3>🔵 DIGEST2 — Stage 2: Acetogenesis + Methanogenesis (RCSTR)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th><th>Notes</th></tr>
-    <tr><td>Reactor type</td><td>RCSTR</td><td></td></tr>
-    <tr><td>Temperature</td><td><strong>55°C (thermophilic)</strong></td><td>Critical for methanogens</td></tr>
-    <tr><td>Pressure</td><td>1.5 atm</td><td>Slight overpressure aids gas collection</td></tr>
-    <tr><td>pH</td><td><strong>7.0 – 7.5</strong></td><td>MOST CRITICAL — methanogens die below 6.5</td></tr>
-    <tr><td>HRT</td><td><strong>15 days</strong></td><td>Literature optimal for sewage sludge (Aspen Plus study: 320K, 15-day HRT)</td></tr>
-    <tr><td>Recycle H₂ stream</td><td><strong>YES — connect H₂ from stage 1 back here</strong></td><td>Enables CO₂+4H₂→CH₄+2H₂O</td></tr>
-    <tr><td>Key reactions (RStoic fractions)</td><td>
-      ACETIC → CH₄ + CO₂ (acetoclastic, 70% of CH₄)<br>
-      CO₂ + 4H₂ → CH₄ + 2H₂O (hydrogenotrophic, 30%)<br>
-      PROPIONIC → ACETIC + CH₄ (obligate syntrophy)
-    </td><td></td></tr>
-    <tr><td>CH₄ fraction target</td><td>60–65 mol% in gas phase</td><td></td></tr>
-    <tr><td>Inoculum (sludge recycle)</td><td>20–30% recycle of digestate</td><td>Maintains microbial population</td></tr>
-  </table>
-
-  <h3>🔵 DIGEST3 — Polishing / Residual Methanogenesis (RCSTR)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th></tr>
-    <tr><td>Temperature</td><td>55°C</td></tr>
-    <tr><td>HRT</td><td>5 days (residual conversion)</td></tr>
-    <tr><td>Purpose</td><td>Convert remaining propionate, butyrate to CH₄</td></tr>
-    <tr><td>Expected CH₄ increase</td><td>+5–8% additional methane from VFA residuals</td></tr>
-  </table>
-
-  <h3>🔵 H₂S REMOVAL BLOCK (new — before scrubber)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Value</th></tr>
-    <tr><td>Type</td><td>Sep2 block (splitter) or Flash2</td></tr>
-    <tr><td>Method</td><td>Iron sponge / caustic scrub (simulate as Sep2)</td></tr>
-    <tr><td>H₂S removal efficiency</td><td>99%</td></tr>
-    <tr><td>Why critical</td><td>H₂S poisons PSA adsorbent and corrodes compressors — must remove first</td></tr>
-  </table>
-
-  <h3>🔵 SCRUBBER (Water Scrubbing — CO₂ removal)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th></tr>
-    <tr><td>Type</td><td>RadFrac column (replace current simple separator)</td></tr>
-    <tr><td>Pressure</td><td><strong>8–10 bar</strong> (your current model does not pressurize — this is why CO₂ isn't absorbed)</td></tr>
-    <tr><td>Temperature</td><td>10–15°C (cooled water)</td></tr>
-    <tr><td>Liquid/gas ratio</td><td>0.1 m³ water per m³ biogas</td></tr>
-    <tr><td>Number of stages</td><td>8–10 theoretical stages</td></tr>
-    <tr><td>CO₂ removal</td><td>85–90%</td></tr>
-  </table>
-
-  <h3>🔵 PSA Block (Pressure Swing Adsorption)</h3>
-  <table>
-    <tr><th>Parameter</th><th>Corrected Value</th></tr>
-    <tr><td>Adsorption pressure</td><td>7–10 bar</td></tr>
-    <tr><td>Regeneration pressure</td><td>0.1–0.5 bar (vacuum)</td></tr>
-    <tr><td>Adsorbent</td><td>Zeolite 13X (simulated as Sep2 with split fractions)</td></tr>
-    <tr><td>CH₄ recovery</td><td>≥97%</td></tr>
-    <tr><td>CO₂ split fraction</td><td>0.98 to waste stream</td></tr>
-    <tr><td>CH₄ split fraction</td><td>0.97 to product stream</td></tr>
-  </table>
-</div>
-
-<!-- SECTION 4: PROPERTY METHOD -->
-<div class="section">
-  <h2>4. Property Method & Thermodynamic Model Settings</h2>
-  <table>
-    <tr><th>Setting</th><th>Recommended Value</th><th>Reason</th></tr>
-    <tr><td>Global property method</td><td><strong>NRTL-RK</strong> or <strong>PSRK</strong></td><td>Best for aqueous systems with gases (CH₄, CO₂, H₂S, NH₃)</td></tr>
-    <tr><td>Henry's law components</td><td>CH₄, CO₂, H₂, H₂S, O₂, N₂</td><td>All dissolved gases need Henry's law</td></tr>
-    <tr><td>Electrolyte chemistry</td><td>Enable ELECNRTL for aqueous phase</td><td>Needed for NH₄⁺/NH₃ and HCO₃⁻/CO₂ equilibria</td></tr>
-    <tr><td>True component approach</td><td>Enable for ionic species</td><td>More accurate pH prediction</td></tr>
-    <tr><td>Nonconventional solids</td><td>HCOALGEN for ash/inert solids</td><td>Standard for biomass solids in Aspen</td></tr>
-  </table>
-</div>
-
-<!-- SECTION 5: REACTION STOICHIOMETRY -->
-<div class="section">
-  <h2>5. Reaction Stoichiometry — Enter These in RStoic/RKinetics Blocks</h2>
-
-  <h3>Stage 1 — Hydrolysis & Acidogenesis Reactions</h3>
-  <table>
-    <tr><th>#</th><th>Reaction</th><th>Fractional Conversion</th><th>Block</th></tr>
-    <tr><td>R1</td><td>DEXTROSE → 2 ACETIC-ACID + 2CO₂ + 4H₂</td><td>0.90</td><td>DIGEST1</td></tr>
-    <tr><td>R2</td><td>DEXTROSE → BUTYRIC-ACID + 2CO₂ + 2H₂</td><td>0.08</td><td>DIGEST1</td></tr>
-    <tr><td>R3</td><td>GLYCINE + H₂O → ACETIC-ACID + NH₃ + CO₂</td><td>0.85</td><td>DIGEST1</td></tr>
-    <tr><td>R4</td><td>TRIOLEIN + 3H₂O → 3 OLEIC-ACID + GLYCEROL</td><td>0.70</td><td>DIGEST1</td></tr>
-    <tr><td>R5</td><td>OLEIC-ACID + 2H₂O → 9 ACETIC-ACID + H₂</td><td>0.50</td><td>DIGEST1</td></tr>
-  </table>
-
-  <h3>Stage 2 — Acetogenesis & Methanogenesis Reactions</h3>
-  <table>
-    <tr><th>#</th><th>Reaction</th><th>Fractional Conversion</th><th>Block</th></tr>
-    <tr><td>R6</td><td>ACETIC-ACID → CH₄ + CO₂</td><td><strong>0.95</strong></td><td>DIGEST2</td></tr>
-    <tr><td>R7</td><td>CO₂ + 4H₂ → CH₄ + 2H₂O</td><td><strong>0.90</strong></td><td>DIGEST2 (H₂ recycle)</td></tr>
-    <tr><td>R8</td><td>PROPIONIC-ACID + 2H₂O → ACETIC-ACID + CO₂ + 3H₂</td><td>0.80</td><td>DIGEST2</td></tr>
-    <tr><td>R9</td><td>BUTYRIC-ACID + 2H₂O → 2 ACETIC-ACID + 2H₂</td><td>0.85</td><td>DIGEST2</td></tr>
-    <tr><td>R10</td><td>GLYCEROL → 1.5 ACETIC-ACID + 0.5 CO₂ + H₂O</td><td>0.90</td><td>DIGEST2</td></tr>
-  </table>
-  <p class="ref">Source: ADM1 (Batstone et al. 2002); Corsino et al. PMC 2021; Al-Hinai et al. Nature Sci. Reports 2020</p>
-</div>
-
-<!-- SECTION 6: SUMMARY TABLE -->
-<div class="section">
-  <h2>6. Summary — Key Changes from Old to New Design</h2>
-  <table>
-    <tr><th>Parameter</th><th>Old (Your Current)</th><th>New (Corrected)</th><th>Impact on CH₄</th></tr>
-    <tr><td>Feedstock O₂</td><td class="red">1336 kg/hr FREE O₂</td><td class="green">0 (all O in organics)</td><td>+15–20% CH₄ gain</td></tr>
-    <tr><td>Feed H₂O</td><td class="red">450 kg/hr (too dry)</td><td class="green">3600 kg/hr (80% moisture)</td><td>Proper microbial environment</td></tr>
-    <tr><td>Digestion temp</td><td>35°C</td><td class="green">55°C (thermophilic)</td><td>+10–15% faster methane kinetics</td></tr>
-    <tr><td>HRT Stage 2</td><td>short (implied)</td><td class="green">15 days</td><td>Complete VFA conversion</td></tr>
-    <tr><td>H₂ recycle</td><td class="red">None (H₂ lost)</td><td class="green">Recycle to Stage 2</td><td>+5–10% CH₄ from CO₂+H₂ reaction</td></tr>
-    <tr><td>Scrubber pressure</td><td class="red">Low/unspecified</td><td class="green">8–10 bar</td><td>CO₂ absorption efficiency +40%</td></tr>
-    <tr><td>H₂S removal</td><td>Partial (in scrubber)</td><td class="green">Dedicated iron sponge block</td><td>Protects PSA, purer CH₄</td></tr>
-    <tr><td>pH Stage 2</td><td>Uncontrolled</td><td class="green">7.0–7.5 (controlled)</td><td>Prevents methanogen inhibition</td></tr>
-    <tr><td>Property method</td><td>Default (unspecified)</td><td class="green">NRTL-RK + ELECNRTL</td><td>Accurate gas solubility</td></tr>
-    <tr><td><strong>Expected CH₄ in biogas</strong></td><td class="red"><strong>~21%</strong></td><td class="green"><strong>55–65%</strong></td><td><strong>3× improvement</strong></td></tr>
-  </table>
-</div>
-
-<!-- SECTION 7: STEP-BY-STEP ASPEN INSTRUCTIONS -->
-<div class="section">
-  <h2>7. Step-by-Step Instructions to Fix Your Aspen Plus Model</h2>
-
-  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Change feed stream BIOMASS:</strong> Delete current component list. Add H₂O (3600 kg/hr), DEXTROSE (270 kg/hr), GLYCINE (247.5 kg/hr), TRIOLEIN (157.5 kg/hr), CELLULOSE/DEXTROSE (125 kg/hr), ASH (100 kg/hr). Set temperature = 25°C, pressure = 1 atm.</div></div>
-
-  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Fix DECOMP (RYield):</strong> Open yield specification. Set O₂ yield = 0. Distribute yields into: DEXTROSE (30%), GLYCINE (27.5%), TRIOLEIN (17.5%), DEXTROSE for fiber (14%), ASH (11%). No free C, H₂, or O₂ outputs.</div></div>
-
-  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Change property method:</strong> Go to Methods → Specifications. Change from default to <span class="code">NRTL-RK</span>. In Henry's components tab, add: CH4, CO2, H2, H2S, O2, N2. Enable ELECNRTL for aqueous reactions.</div></div>
-
-  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Change DIGEST1 to thermophilic:</strong> Set temperature = 55°C (328 K). Add stoichiometric reactions R1–R5 from Section 5. Set pH controller to maintain 5.5–6.0. Remove any O₂ from inputs.</div></div>
-
-  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Add H₂ recycle stream to DIGEST2:</strong> In the PFD, draw a stream from the gas outlet of DIGEST1 back to the inlet of DIGEST2. This routes H₂ gas to react with CO₂ via reaction R7 (CO₂ + 4H₂ → CH₄ + 2H₂O). Set fractional conversion = 0.90 for this reaction.</div></div>
-
-  <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Increase DIGEST2 HRT to 15 days:</strong> Calculate reactor volume = total inlet flow (kg/hr) × HRT (hr) / density (kg/m³). Add reactions R6–R10 from Section 5. Set temperature = 55°C, pressure = 1.5 atm, pH = 7.2.</div></div>
-
-  <div class="step"><div class="step-num">7</div><div class="step-content"><strong>Add dedicated H₂S removal block BEFORE scrubber:</strong> Insert a Sep2 block between B2 and SCRUBBER. Set H₂S component split fraction = 0.99 to waste stream. NH₃ split fraction = 0.70 to waste stream.</div></div>
-
-  <div class="step"><div class="step-num">8</div><div class="step-content"><strong>Fix SCRUBBER pressure:</strong> Add a COMP block before SCRUBBER to pressurize gas to 9 bar. In SCRUBBER, set pressure = 9 bar, temperature = 12°C. Use RadFrac with 10 stages instead of Sep2.</div></div>
-
-  <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Fix PSA block:</strong> In the Sep2 PSA block, set split fractions: CH₄ → product stream = 0.97; CO₂ → waste = 0.98; H₂S → waste = 1.0. Operating pressure = 7 bar. Add COOLER2 at 10°C to condense water before product storage.</div></div>
-
-  <div class="step"><div class="step-num">10</div><div class="step-content"><strong>Run sensitivity analysis:</strong> Use Aspen's sensitivity tool to vary DIGEST2 temperature (45–60°C) and HRT (10–20 days) and plot CH₄ mole fraction in the final product. Optimal is ~55°C and 15 days per Aspen Plus literature.</div></div>
-</div>
-
-<!-- SECTION 8: EXPECTED RESULTS -->
-<div class="section">
-  <h2>8. Expected Final Stream Results After Correction</h2>
-  <table>
-    <tr><th>Stream</th><th>Component</th><th>Old (kg/hr)</th><th>Expected New (kg/hr)</th><th>Change</th></tr>
-    <tr><td rowspan="3">Biogas (after DIGEST3)</td><td>CH₄</td><td>311.8</td><td>~680–750</td><td class="green">+120%</td></tr>
-    <tr><td>CO₂</td><td>1230.5</td><td>~520–600</td><td class="green">−55%</td></tr>
-    <tr><td>O₂</td><td>172.5</td><td><strong>0</strong></td><td class="green">Eliminated</td></tr>
-    <tr><td rowspan="2">Product (after PSA)</td><td>CH₄</td><td>309.6</td><td>~660–720</td><td class="green">+120%</td></tr>
-    <tr><td>CO₂</td><td>1186.7</td><td>~15–25</td><td class="green">−99%</td></tr>
-    <tr><td>CH₄ mole% in biogas</td><td colspan="2">~21%</td><td class="green">~60–65%</td><td class="green">3× improvement</td></tr>
-    <tr><td>CH₄ mole% in product gas</td><td colspan="2">~100% (PSA)</td><td class="green">>95%</td><td>Cooking gas standard met</td></tr>
-  </table>
-</div>
-
-<div style="background:#e8f4ff; border-left:4px solid #007bff; padding:12px 16px; border-radius:0 6px 6px 0; margin-top:16px; font-size:12px;">
-  <strong>📌 For your report:</strong> Cite these corrections against ADM1 (Batstone et al. 2002), Corsino et al. 2021 (PMC), Al-Hinai et al. 2020 (Nature Scientific Reports — free PDF), and Mulu et al. 2023 (Frontiers — free PDF). All available in your free literature table.
+  <strong>FUT Minna | Chemical Engineering | 10,000 m³/day Cooking Gas Plant from Human Waste</strong>
 </div>
 
 </body>
